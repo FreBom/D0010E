@@ -2,18 +2,20 @@ package generalsimulator;
 
 import java.util.Observable;
 public class State extends Observable{
-	private boolean emergencyBreak = true;
+	private boolean emergencyBreak = false;
 	
-	public boolean emergencyBreak(){
+	public boolean pullEmergencyBreak(){
+		emergencyBreak = true;
+		return emergencyBreak;
 		//if (time >= startTime && time < stopTime){
-			emergencyBreak = false;
+			//emergencyBreak = false;
 			
 		//}
 		//else{ 
-			emergencyBreak = true;
+			//emergencyBreak = true;
 			//}
 		
-		return emergencyBreak;
+		//return emergencyBreak;
 		
 	}
 
