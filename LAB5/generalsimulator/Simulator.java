@@ -6,5 +6,6 @@ package generalsimulator;
  *
  */
 public class Simulator {
+	public void start(){}
 
 }
