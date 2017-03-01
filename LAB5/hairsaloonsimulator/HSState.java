@@ -6,32 +6,33 @@ import generalsimulator.Time;
 public class HSState extends State implements Time {
 	private int queueLength;// tyckte det var bättra namn än FIFOSIZE
 	private int numberOfChairs;
-	private int startingTime;
-	private int stopTime;
-	
-	public HSState(int queueLength,int numberOfChairs,int startingTime,int stopTime) {
+	private int simStartTime;// starttime for simulation
+	private int simStopTime;// simulation stoptime
+
+	public HSState(int queueLength, int numberOfChairs, int simStartTime, int simStopTime) {
 		this.queueLength = queueLength;
 		this.numberOfChairs = numberOfChairs;
-		this.startingTime = startingTime;
-		this.stopTime = stopTime;
+		this.simStartTime = simStartTime;
+		this.simStopTime = simStopTime;
 	}
-	
-	private int getQueueLength(){//kanske bättre med protected
+
+	private int getQueueLength() {// kanske bättre med protected
 		return this.queueLength;
 	}
-	private int getNumberOfchairs(){
+
+	private int getNumberOfchairs() {
 		return this.numberOfChairs;
 	}
 
 	@Override
 	public void setStartingTime() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setStopTime() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
