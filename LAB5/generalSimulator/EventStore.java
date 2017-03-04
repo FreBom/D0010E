@@ -52,5 +52,12 @@ public class EventStore {
 			eventList.remove(0);
 		}
 	}
+	public String toString() {
+		String out = "Queue: ";
+		for(Object e : eventList) {
+			out += "(" + e.toString() + ") ";
+		}
+		return out;
+	}
 
 }
