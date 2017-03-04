@@ -4,10 +4,10 @@ import java.util.Observable;
 
 public class State extends Observable {
 
-	private static boolean emergencyBreak = true;
+	private boolean emergencyBreak = true;
 
 
-	public static void setEmergencyBreak(boolean setBreak) {
+	public void setEmergencyBreak(boolean setBreak) {
 		emergencyBreak = setBreak;
 		
 	}

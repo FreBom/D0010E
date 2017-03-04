@@ -1,6 +1,6 @@
 package generalSimulator;
 
-public abstract class StopEvent extends Event{
+public class StopEvent extends Event{
 	
 	public StopEvent(double time) {
 		super(double time);
@@ -10,6 +10,10 @@ public abstract class StopEvent extends Event{
 	public void effect() {
 		State.setEmergencyBreak(false);
 	}
+	
+	
+	
+	
 	
 
 }

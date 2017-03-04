@@ -13,9 +13,11 @@ import java.util.Observable;
 public class Simulator {
 	
 	private EventStore eventList;
+	private State state;
 	
-	public Simulator(EventStore eventList) {
+	public Simulator(State state, EventStore eventList) {
 		this.eventList = eventList;
+		this.state = state;
 		this.addObserver(View);
 		
 		
@@ -23,7 +25,7 @@ public class Simulator {
 	
 	public void start(){
 		
-		while(!eventList.isEmpty()) {
+		while(State.getEmergencyBreak() && !eventList.isEmpty()) {
 			
 			Event event = eventList.first();
 			eventList.removeFirst();
