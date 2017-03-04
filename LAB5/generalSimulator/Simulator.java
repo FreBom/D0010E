@@ -1,6 +1,7 @@
 package generalSimulator;
 
 import java.awt.Event;
+import java.util.Observable;
 
 
 /**
@@ -17,8 +18,7 @@ public class Simulator {
 		this.eventList = eventList;
 		
 		
-	}
-	
+	}	
 	
 	public void start(){
 		
