@@ -16,6 +16,7 @@ public class Simulator {
 	
 	public Simulator(EventStore eventList) {
 		this.eventList = eventList;
+		this.addObserver(View);
 		
 		
 	}	
@@ -26,7 +27,7 @@ public class Simulator {
 			
 			Event event = eventList.first();
 			eventList.removeFirst();
-			//event.event
+			eventList.first();
 			
 		}
 		

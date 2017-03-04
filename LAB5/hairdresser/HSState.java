@@ -4,10 +4,7 @@ import generalSimulator.State;
 import generalSimulator.Time;
 
 public class HSState extends State implements Time{
-//	private int queueLength = 6;  //antal platser i v�ntek�n
-//	private int numberOfChairs = 3;   //antal stolar som man kan klippa sig i
-//	private int simStartTime;  //d� fris�rsalongen �ppnar
-//	private int simStopTime;  //d� fris�rsalongen st�nger
+
 	
 	private static int queueLength, numberOfChairs, simStartTime, simStopTime;
 
