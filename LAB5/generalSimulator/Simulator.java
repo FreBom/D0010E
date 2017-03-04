@@ -25,7 +25,7 @@ public class Simulator {
 	
 	public void start(){
 		
-		while(State.getEmergencyBreak() && !eventList.isEmpty()) {
+		while(state.getEmergencyBreak() && !eventList.isEmpty()) {
 			
 			Event event = eventList.first();
 			eventList.removeFirst();
