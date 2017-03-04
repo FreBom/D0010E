@@ -1,4 +1,4 @@
-package generalsimulator;
+package generalSimulator;
 
 import java.util.Observable;
 import java.util.Observer;

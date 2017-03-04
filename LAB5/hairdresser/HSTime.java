@@ -1,8 +1,10 @@
-package hairsaloonsimulator;
+package hairdresser;
+
+import java.awt.Event;
 
 import com.sun.java.accessibility.util.EventID;
 
-public class HSTime implements generalsimulator.Time {
+public class HSTime implements generalSimulator.Time {
 	private int hmin;
 	private int hmax;
 	private int dmin;

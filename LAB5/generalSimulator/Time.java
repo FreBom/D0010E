@@ -1,4 +1,4 @@
-package generalsimulator;
+package generalSimulator;
 
 public interface Time {
 	 void setStartingTime();
