@@ -14,6 +14,10 @@ public class NewCustomer {
 		return new Customer(id);
 		
 	}
+	
+	public int customers() {
+		return id;
+	}
 
 }
 

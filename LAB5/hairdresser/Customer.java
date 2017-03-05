@@ -9,7 +9,7 @@ public class Customer {
 	}
 	
 	public int getID(){
-		return this.id;
+		return id;
 	}
 }
 
