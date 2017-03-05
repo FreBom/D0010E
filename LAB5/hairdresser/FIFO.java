@@ -2,6 +2,7 @@ package hairdresser;
 
 import java.util.ArrayList;
 
+
 public class FIFO extends generalSimulator.EventStore{
 	private int numCustomers = 0;
 	private int numLost = 0;
@@ -97,12 +98,12 @@ public class FIFO extends generalSimulator.EventStore{
 		}
 		int i = 1;  //platsen som �r ledig
 		Customer customerInQueue;
-		if(oldCustomerQueue.size() > i){  //kollar f�rst om det finns n�gra gamla kunder
+		if(oldCustomerQueue.size() >= i){  //kollar f�rst om det finns n�gra gamla kunder
 			customerInQueue = oldCustomerQueue.get(i);
 			customerGetHaircut.add(customerInQueue);
 			oldCustomerQueue.remove(i); //tar bort kunden som nu f�r klippning fr�n oldCustomerQueue
 		}
-		else if(newCustomerQueue.size() > i){  //ifall det inte fanns n�gra gamla kunder i k�n, kollar man om det finns nyga kunder i k�
+		else if(newCustomerQueue.size() >= i){  //ifall det inte fanns n�gra gamla kunder i k�n, kollar man om det finns nyga kunder i k�
 			customerInQueue = newCustomerQueue.get(i); //b�rjar kolla fr�n f�rsta i listan i newCustomer. Om det fanns en oldcustomer i k�n
 			customerGetHaircut.add(customerInQueue);
 			newCustomerQueue.remove(i);	//tar bort kunden som nu f�r klippning fr�n newCustomerQueue
