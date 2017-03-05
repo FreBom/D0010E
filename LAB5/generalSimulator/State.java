@@ -16,9 +16,9 @@ public class State extends Observable {
 		return emergencyBreak;
 	}
 
-	public void observable(Event event) {
-		setChanged();
-		notifyObservers(event);
+
+	public void update(Observable o, Object arg) {
+		
 	}
 
 }

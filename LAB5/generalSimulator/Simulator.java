@@ -1,12 +1,11 @@
 package generalSimulator;
 
-import java.awt.Event;
 import java.util.Observable;
 
 
 /**
  * 
- * @author Dexmo
+ * @author arostr-5@student.ltu.se, fanny, dexmo
  *
  *
  */
@@ -14,17 +13,18 @@ public class Simulator {
 	
 	private EventStore eventList;
 	private State state;
+	private View view;
 	
-	public Simulator(State state, EventStore eventList) {
+	public Simulator(State state, EventStore eventList, View view) {
 		this.eventList = eventList;
 		this.state = state;
-		this.addObserver(View);
+		this.view = view;
 		
 		
 	}	
 	
 	public void start(){
-		
+		view.startPrint();
 		while(state.getEmergencyBreak() && !eventList.isEmpty()) {
 			
 			Event event = eventList.first();
@@ -32,6 +32,7 @@ public class Simulator {
 			eventList.first();
 			
 		}
+		view.stopPrint();
 		
 		
 	}
