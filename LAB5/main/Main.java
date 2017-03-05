@@ -21,7 +21,7 @@ public class Main {
 		Simulator simulation = new Simulator(state, store, view);
 		simulation.start();
 		
-		
+		// hejsan
 		
 	}
 
