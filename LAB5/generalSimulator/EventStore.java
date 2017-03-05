@@ -16,7 +16,7 @@ public class EventStore extends Observable {
 
 	public void add(Event e) {
 		for(int i = 0; i < eventList.size() - 1; i++) {
-			if(e.gettime() > eventList.get(i).gettime()) {
+			if(e.getTime() > eventList.get(i).getTime()) {
 				eventList.add(i, e);
 			}
 			

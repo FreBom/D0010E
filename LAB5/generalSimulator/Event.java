@@ -22,11 +22,11 @@ public abstract class Event {
 //		
 //	}
 	
-	public double gettime() {
+	public double getTime() {
 		return time;
 	}
 	
-	public abstract void execute(State state);
+	public abstract void execute(State state, EventStore store);
 	
 	public String toString() {
 		return this.getClass().getSimpleName();

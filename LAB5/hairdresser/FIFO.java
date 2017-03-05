@@ -17,17 +17,10 @@ public class FIFO extends generalSimulator.EventStore{
 	
 	
 	public int idle(){
-		return 0;
+		return numberOfChairs - customerGetHaircut.size();
 	}
 	
-	public int timeWaiting(){
-		return 0;
-	}
-	
-	public int timeIdle(){
-		return 0;
-	}
-	
+
 	
 	public void add(Customer customer) {
 		if(customerGetHaircut.size() == numberOfChairs){  //kollar om alla platser f�r klippning �r upptagna
@@ -36,27 +29,7 @@ public class FIFO extends generalSimulator.EventStore{
 		else{
 			customerGetHaircut.add(customer);	//om det finns n�gon plats ledig s� placeras kunden p� den
 		}
-//		else{
-//			if(numWaiting() == 0){
-//				customerGetHaircut.add(customer);
-//			}
-//			else if(numWaiting() >= (numberOfChairs - customerGetHaircut.size())){
-//				for(int i = customerGetHaircut.size(); i < numberOfChairs ; i++){
-//					int numOld = 0;
-//					Customer customerInQueue;
-//					if(oldCustomerQueue.size() > i){
-//						customerInQueue = oldCustomerQueue.get(i);
-//						numOld++;
-//					}
-//					else{
-//						customerInQueue = newCustomerQueue.get(i-numOld); //b�rjar kolla fr�n f�rsta i listan i newCustomer. Om det fanns en oldcustomer i k�n
-//					}
-//					customerGetHaircut.add(customerInQueue);
-//				addQueue(customer);
-//			}
-//				
-//			}
-//		}
+
 	}
 	
 	

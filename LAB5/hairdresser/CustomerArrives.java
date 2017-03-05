@@ -1,25 +1,40 @@
 package hairdresser;
 
-public class CustomerArrives extends generalSimulator.Event {
+import generalSimulator.Event;
+import generalSimulator.State;
+import generalSimulator.EventStore;
+
+public class CustomerArrives extends Event {
 	
 	
+	HairdressState state;
+	EventStore store;
+	
+	double time;
 	
 	
+	public CustomerArrives(State state, EventStore store) {
+		this.state = (HairdressState) state;
+		this.store = store;
+		time = this.state.newEventTime();
+		
+		
+	}
 	
-	public CustomerArrives(int start, int state , int time){
+	
+	public void execute(State state, EventStore store) {
+		
+		customerEnters();
+		store.add(new CustomerArrives(state, store));
+		
+		
 		
 	}
 
-	@Override
-	public int time() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public String customerEnters() {
+		return "Enter";
 	}
 	
 	

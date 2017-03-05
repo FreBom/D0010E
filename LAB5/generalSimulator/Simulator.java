@@ -25,7 +25,7 @@ public class Simulator {
 	
 	public void start(){
 		view.startPrint();
-		while(state.getEmergencyBreak() && !eventList.isEmpty()) {
+		while(!(state.getEmergencyBreak()) && !(eventList.isEmpty())) {
 			
 			Event event = eventList.first();
 			eventList.removeFirst();
