@@ -10,7 +10,7 @@ public class CustomerArrives extends Event {
 	HairdressState state;
 	EventStore store;
 	
-	double time;
+	private double time;
 	
 	
 	public CustomerArrives(State state, EventStore store) {
