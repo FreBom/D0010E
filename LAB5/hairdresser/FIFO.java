@@ -11,8 +11,8 @@ public class FIFO extends generalSimulator.EventStore{
 	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
 	private ArrayList<Customer> customerGetHaircut = new ArrayList<Customer>();
 	
-	private int queueLength = hairdresser.HSState.getQueueLength(); //Vill s�tta den till antalet v�ntplatser fr�n metoden getQueueLength()
-	private int numberOfChairs = hairdresser.HSState.getNumberOfChairs(); //Vill s�tta den till antalet platser fr�n metoden getNumberOfchairs()
+	private int queueLength = hairdresser.HairdressState.getQueueLength(); //Vill s�tta den till antalet v�ntplatser fr�n metoden getQueueLength()
+	private int numberOfChairs = hairdresser.HairdressState.getNumberOfChairs(); //Vill s�tta den till antalet platser fr�n metoden getNumberOfchairs()
 	private boolean newCustomer;  //ska nog inte ligga h�r, alla objekt ska ha denna
 	
 	

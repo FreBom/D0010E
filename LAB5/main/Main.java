@@ -1,13 +1,13 @@
 package main;
 
 import generalSimulator.EventStore;
-import hairdresser.HSState;
+import hairdresser.HairdressState;
 
 public class Main {
 	
 	public static void main(String[] args){
 		
-		HSState state = new HSState();
+		HairdressState state = new HairdressState();
 		EventStore store = new EventStore();
 		HaidressView view = new HaidressView(state);
 		
