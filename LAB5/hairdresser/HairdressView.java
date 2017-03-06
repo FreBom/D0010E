@@ -2,7 +2,7 @@ package hairdresser;
 
 public class HairdressView extends HairdressState{
 	
-	public void display(){
+	public void startPrint(){ // Se Simulator start():
 		
 		System.out.println("Closing time of the day ..............: " + getSimStopTime());
 		System.out.println("Total number of chairs ...............: " + getNumberOfChairs());
@@ -15,6 +15,9 @@ public class HairdressView extends HairdressState{
 		
 		
 		
+		
+	}
+	public void endPrint() {
 		
 	}
 	

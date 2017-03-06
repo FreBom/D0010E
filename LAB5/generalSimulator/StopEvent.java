@@ -12,11 +12,6 @@ public class StopEvent extends Event {
 		super(time);
 
 	}
-
-	/**
-	 * 
-	 * @param s the current simulation that we want to pull the emergencyBreak on.
-	 */
 	public void activateEmergencyBreak(State s) {
 		s.setEmergencyBreak(true);
 	}
