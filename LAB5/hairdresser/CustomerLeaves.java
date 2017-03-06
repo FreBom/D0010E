@@ -24,7 +24,7 @@ public class CustomerLeaves extends Event{
 	public void execute(State state, EventStore store, Customer readyCustomer) {
 		boolean diss = CustomerDissatisfied.getDissatisfied();
 		if(diss){
-			store.add(CustomerReturns.CustomerReturns())
+			store.add(CustomerReturns.CustomerReturns(state, store , readyCustomer));
 		}
 		FIFO.addGetHaircut(readyCustomer);  
 		
