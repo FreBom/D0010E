@@ -10,7 +10,7 @@ public class NewCustomer {
 	 * */
 	
 	public static Customer create(){
-		id =+ 1;
+		int id =+ 1;
 		return new Customer(id);
 		
 	}

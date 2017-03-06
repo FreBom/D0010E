@@ -5,14 +5,27 @@ import java.util.NoSuchElementException;
 import java.util.Observable;
 
 /**
- * EventStore holds an Arraylist with events and different methods specified below.
+ * EventStore holds an Arraylist with events and different methods specified
+ * below.
+ * 
  * @author arostr-5@student.ltu.se, fanny, dexmo
  *
  *
  */
 public class EventStore extends Observable {
 
-	private ArrayList<Event> eventList = new ArrayList<Event>();
+	private ArrayList<Event> eventList = new ArrayList<Event>();// TODO varför
+																// har vi en
+																// eventlist här
+																// och en i i
+																// simulator,
+																// lätt att
+																// tappa bort
+																// sig vilken
+																// man menar?
+																// Förslag: byt
+																// namn på en av
+																// dem.
 
 	/**
 	 * 
@@ -21,8 +34,8 @@ public class EventStore extends Observable {
 	 *            add method will add two events in time order.
 	 */
 	public void add(Event e) {
-		
-		for (int i = 0; i < eventList.size() ; i++) {
+
+		for (int i = 0; i < eventList.size(); i++) {
 			if (e.getTime() >= eventList.get(i).getTime()) {
 				eventList.add(i, e);
 			}
@@ -30,10 +43,13 @@ public class EventStore extends Observable {
 		}
 
 	}
+
 	/**
 	 * calls the setChanged(); and notifyObservers(); methods.
+	 * 
 	 * @return the first element in the eventList.
-	 * @throws NoSuchElementException if the eventList is empty.
+	 * @throws NoSuchElementException
+	 *             if the eventList is empty.
 	 * 
 	 */
 	public Event first() {
@@ -47,13 +63,15 @@ public class EventStore extends Observable {
 		}
 
 	}
+
 	/**
 	 * 
-	 * @return the eventLists length. 
+	 * @return the eventLists length.
 	 */
 	public int size() {
 		return eventList.size();
 	}
+
 	/**
 	 * 
 	 * @return <b> true </b> if empty else <b>false</b>
@@ -65,13 +83,15 @@ public class EventStore extends Observable {
 		return false;
 
 	}
-	
+
 	public void clear() {
 		eventList.clear();
 	}
+
 	/**
 	 * 
-	 * @param E is the event that will be removed from the eventList
+	 * @param E
+	 *            is the event that will be removed from the eventList
 	 */
 	public void remove(Event E) {
 		for (int i = 0; i < eventList.size(); i++) {
@@ -81,9 +101,12 @@ public class EventStore extends Observable {
 		}
 
 	}
+
 	/**
 	 * removes the first element at index 0 in the eventList
-	 * @throws NoSuchElementException if the eventList is empty
+	 * 
+	 * @throws NoSuchElementException
+	 *             if the eventList is empty
 	 * 
 	 */
 	public void removeFirst() {
