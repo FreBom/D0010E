@@ -14,10 +14,10 @@ public class FIFO extends generalSimulator.EventStore{
 	
 	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();
 	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
-	private ArrayList<Customer> customerGetHaircut = new ArrayList<Customer>();
+	private ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();
 	
 	private int queueLength = hairdresser.HairdressState.getQueueLength(); //Vill s�tta den till antalet v�ntplatser fr�n metoden getQueueLength()
-	private int numberOfChairs = hairdresser.HairdressState.getNumberOfChairs(); //Vill s�tta den till antalet platser fr�n metoden getNumberOfchairs()
+	private int numberOfCuttingChairs = hairdresser.HairdressState.getNumberOfChairs(); //Vill s�tta den till antalet platser fr�n metoden getNumberOfchairs()
 	private boolean newCustomer;  //ska nog inte ligga h�r, alla objekt ska ha denna
 	
 	/**
@@ -25,17 +25,18 @@ public class FIFO extends generalSimulator.EventStore{
 	 * @return the number of hairCuttingChairs that are not being use at this time.
 	 */
 	public int idle(){
-		return numberOfChairs - customerGetHaircut.size();
+		return numberOfCuttingChairs - customerGettingHaircut.size();
 	}
-	
-
-	
+	/**
+	 * 
+	 * @param customer is the customer object that will be added to the list: customerGettingHaircut
+	 */
 	public void add(Customer customer) {
-		if(customerGetHaircut.size() == numberOfChairs){  //kollar om alla platser f�r klippning �r upptagna
+		if(customerGettingHaircut.size() == numberOfCuttingChairs){  //kollar om alla platser f�r klippning �r upptagna
 			addQueue(customer);      //l�gger in i k� mha metoder addQueue()
 			}
 		else{
-			customerGetHaircut.add(customer);	//om det finns n�gon plats ledig s� placeras kunden p� den
+			customerGettingHaircut.add(customer);	//om det finns n�gon plats ledig s� placeras kunden p� den
 		}
 
 	}
@@ -48,7 +49,7 @@ public class FIFO extends generalSimulator.EventStore{
 	public void removeLast(){
 		newCustomerQueue.remove(-1);  //tar den bort den sista i listan?	
 	}
-	
+
 	public void addQueue(Customer customer){
 		if(this.newCustomer){  //ska �ndras, alla customers ska ha den boolska variablen
 			numCustomers ++; //sparar antalet kunder
@@ -75,21 +76,21 @@ public class FIFO extends generalSimulator.EventStore{
 	 * @param readyCustomer
 	 */
 	public void addGetHaircut(Customer readyCustomer){  //kallas p� n�r en kund g�r och en plats blir ledig
-		for(int i = 0; i < customerGetHaircut.size() ; i++ ){  //kollar igenom listan f�r dem som klipper sig, tar bort den som var klar ur den listan
-			if(customerGetHaircut.get(i) == readyCustomer){
-				customerGetHaircut.remove(i);
+		for(int i = 0; i < customerGettingHaircut.size() ; i++ ){  //kollar igenom listan f�r dem som klipper sig, tar bort den som var klar ur den listan
+			if(customerGettingHaircut.get(i) == readyCustomer){
+				customerGettingHaircut.remove(i);
 			}
 		}
 		int i = 1;  //platsen som �r ledig
 		Customer customerInQueue;
 		if(oldCustomerQueue.size() >= i){  //kollar f�rst om det finns n�gra gamla kunder
 			customerInQueue = oldCustomerQueue.get(i);
-			customerGetHaircut.add(customerInQueue);
+			customerGettingHaircut.add(customerInQueue);
 			oldCustomerQueue.remove(i); //tar bort kunden som nu f�r klippning fr�n oldCustomerQueue
 		}
 		else if(newCustomerQueue.size() >= i){  //ifall det inte fanns n�gra gamla kunder i k�n, kollar man om det finns nyga kunder i k�
 			customerInQueue = newCustomerQueue.get(i); //b�rjar kolla fr�n f�rsta i listan i newCustomer. Om det fanns en oldcustomer i k�n
-			customerGetHaircut.add(customerInQueue);
+			customerGettingHaircut.add(customerInQueue);
 			newCustomerQueue.remove(i);	//tar bort kunden som nu f�r klippning fr�n newCustomerQueue
 		}	
 	}
