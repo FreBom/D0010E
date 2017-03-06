@@ -52,7 +52,7 @@ public class FIFO extends generalSimulator.EventStore{
 			}
 		else{
 			customerGettingHaircut.add(customer);	
-			store.add(new CustomerLeaves(state, store, customer));
+			generalSimulator.EventStore.add(new CustomerLeaves(state, store, customer));
 		}
 
 	}
