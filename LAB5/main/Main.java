@@ -6,6 +6,7 @@ import generalSimulator.State;
 import hairdresser.Customer;
 import hairdresser.CustomerArrives;
 import hairdresser.HairdressState;
+import hairdresser.HairdressView;
 import hairdresser.FIFO;
 
 public class Main extends Simulator{
@@ -16,10 +17,10 @@ public class Main extends Simulator{
 	   
 	}
 	
-    void start() {
+    public void start() {
         EventStore store = new EventStore();
         State state = new HairdressState();
-        HairdressView view = new HaidressView(state);
+        HairdressView view = new HairdressView();
         Customer customer;
         int randomCustomer = (int) (Math.floor(Math.random() * (maxCustomer - minCustomer + 1)) + minCustomer);
         for(int i = 1; i <= randomCustomer; i++){
