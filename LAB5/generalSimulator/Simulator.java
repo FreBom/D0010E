@@ -3,6 +3,7 @@ package generalSimulator;
 import java.util.Observable;
 
 
+
 /**
  * 
  * @author arostr-5@student.ltu.se, fanny, dexmo
@@ -14,6 +15,7 @@ public class Simulator {
 	private EventStore eventList;
 	private State state;
 	private View view;
+	private double time;
 	
 	public Simulator(State state, EventStore eventList, View view) {
 		this.eventList = eventList;
@@ -23,11 +25,14 @@ public class Simulator {
 		
 	}	
 	
+	
 	public void start(){
 		view.startPrint();
+		Event e;
 		while(!(state.getEmergencyBreak()) && !(eventList.isEmpty())) {
-			
-			Event event = eventList.first();
+			time = e.time;
+			e = eventList.first();
+			e.execute(this);
 			eventList.removeFirst();
 			eventList.first();
 			
@@ -35,6 +40,6 @@ public class Simulator {
 		view.stopPrint();
 		
 		
-	}
+	}  
 
 }
