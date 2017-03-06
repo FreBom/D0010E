@@ -22,7 +22,7 @@ public class CustomerArrives extends Event {
 	
 	
 	public void execute(State state, EventStore store, Customer customer) {
-		hairdresser.FIFO.add(customer);
+		hairdresser.FIFO.addNew(state , store, customer);
 		customerEnters();
 		
 		
