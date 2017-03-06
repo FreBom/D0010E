@@ -13,14 +13,6 @@ public class StopEvent extends Event {
 
 	}
 
-	public void effect() {// Fredrik : jag tog ej bort denna men antog att den 
-							// skule göra någt i stil med activateEmergencyBreak
-							// så skapade den istället
-		//TODO: ska vi ta bort den här metoden? vad gör den?
-
-		State.setEmergencyBreak(false);
-
-	}
 
 	public void activateEmergencyBreak(State s) {
 		s.setEmergencyBreak(true);
