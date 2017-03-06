@@ -13,28 +13,24 @@ public class CustomerArrives extends Event {
 	private double time;
 	
 	
-	public CustomerArrives(State state, EventStore store) {
+	public CustomerArrives(State state, EventStore store, Customer customer) {
 		this.state = (HairdressState) state;
 		this.store = store;
-		time = this.state.newEventTime();
-		
+		time = this.state.newEventTime();		
 		
 	}
 	
 	
-	public void execute(State state, EventStore store) {
-		
+	public void execute(State state, EventStore store, Customer customer) {
+		hairdresser.FIFO.add(customer);
 		customerEnters();
-		store.add(new CustomerArrives(state, store));
 		
 		
 		
 	}
-
-
 	
 	public String customerEnters() {
-		return "Enter";
+		return "Arrived";
 	}
 	
 	

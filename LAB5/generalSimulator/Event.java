@@ -14,13 +14,8 @@ public abstract class Event {
 	
 	public Event(double time) {
 		this.time = time;
-		//this.settime(time);
 	}
 	
-//	public void settime(double time) {
-//		this.time = time;
-//		
-//	}
 	
 	public double getTime() {
 		return time;
@@ -34,7 +29,7 @@ public abstract class Event {
 	
     public boolean lessThan(Comparable y) {
         Event e = (Event) y; 
-        return this.time < e.time;  //kollar om tiden nu är mindre en tiden för eventet
+        return this.time < e.time;  //kollar om tiden nu ï¿½r mindre en tiden fï¿½r eventet
 
 }
 

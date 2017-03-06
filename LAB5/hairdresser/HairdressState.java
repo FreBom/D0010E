@@ -7,32 +7,24 @@ import generalSimulator.Time;
 
 public class HairdressState extends State {
 	
-	private double currentTime;
-	private final double simStopTime = 7.0; 
+	protected final double currentTime = 0;
+	protected final double simStopTime = 7.0; 
 	
-	private final int queueLength = 5;
-	private final int numberOfChairs = 2;
+	protected final int queueLength = 5;
+	protected final int numberOfChairs = 2;
 	
-	private final double probDissatisfied = 0.5;
+	protected static final double probDissatisfied = 0.5;
 	
 	// Entry rate per 1/lambda
-	private final double lambda = 4.0;
-	private final long seed = 1116;
+	protected final double lambda = 4.0;
+	protected final static long seed = 1116;
 	
 	// hmin & hmax, time with specified interval it takes to cut the hair.
-	private final double hmin = 0.5, hmax = 1.0;
+	protected final double hmin = 0.5, hmax = 1.0;
 	
 	// dmin & dmax, time it takes for dissatisfied customer to return.
-	private final double dmin = 1.0, dmax = 2.0;
+	protected final double dmin = 1.0, dmax = 2.0;
 	
-	
-	
-//	public HairdressState(int queueLength, int numberOfChairs, int simStopTime, double probDissatisfied) {
-//		this.queueLength = queueLength;       
-//		this.numberOfChairs = numberOfChairs;  
-//		this.simStopTime = simStopTime;  
-//		this.probDissatisfied = probDissatisfied;
-//	}
 	
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
 	private UniformRandomStream cutTime = new UniformRandomStream(hmin, hmax, seed);
@@ -61,7 +53,9 @@ public class HairdressState extends State {
 		return 0;
 	}
 	
-	
+	public long getSeed() {
+		return seed;
+	}
 
 	public int getQueueLength() {// kanske b�ttre med protected
 		return queueLength;
@@ -71,8 +65,20 @@ public class HairdressState extends State {
 		return numberOfChairs;
 	}
 	
-	public int getSimStopTime(){
+	public double getSimStopTime(){
 		return simStopTime;
+	}
+	
+	public double getLambda() {
+		return lambda;
+	}
+	
+	public double[] hArray() {
+		return new double[] {hmin, hmax};
+	}
+	
+	public double[] dArray() {
+		return new double[] {dmin, dmax};
 	}
 	
 

@@ -37,6 +37,7 @@ public class FIFO extends generalSimulator.EventStore{
 			}
 		else{
 			customerGettingHaircut.add(customer);	//om det finns n�gon plats ledig s� placeras kunden p� den
+			store.add(new CustomerLeaves(state, store, customer));
 		}
 
 	}

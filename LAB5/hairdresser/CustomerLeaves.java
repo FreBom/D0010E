@@ -1,15 +1,32 @@
 package hairdresser;
 
-import java.awt.Event;
 
+import generalSimulator.Event;
+import generalSimulator.EventStore;
+import generalSimulator.State;
 import hairdresserState.Customer;
+import hairdresser.CustomerDissatisfied;
 
-public class CustomerLeaves extends hairdresser.FIFO {
+public class CustomerLeaves extends Event{
 	
-	private boolean dissatisfied;
-
-	public CustomerLeaves(Customer readyCustomer, Event state ,int time){  //vet inte riktigt vad som ska stå här än
-		addGetHaircut(readyCustomer);  //tar bort den som lämnat ur kön för de som klipper sig, och gör så att det som står först i kön kan klippa sig
+	HairdressState state;
+	EventStore store;
+	double time;
+	
+	public CustomerLeaves(State state, EventStore store, Customer readyCustomer){  
+		this.state = (HairdressState) state;
+		this.store = store;
+		time = this.state.newEventTime();
+		
+		
+	}
+	
+	public void execute(State state, EventStore store, Customer readyCustomer) {
+		boolean diss = CustomerDissatisfied.getDissatisfied();
+		if(diss){
+			store.add(CustomerReturns.CustomerReturns())
+		}
+		FIFO.addGetHaircut(readyCustomer);  
 		
 		
 	}

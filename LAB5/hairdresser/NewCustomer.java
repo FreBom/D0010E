@@ -9,7 +9,7 @@ public class NewCustomer {
 	 *@return the new customer
 	 * */
 	
-	public Customer create(){
+	public static Customer create(){
 		id =+ 1;
 		return new Customer(id);
 		

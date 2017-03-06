@@ -3,7 +3,9 @@ package main;
 import generalSimulator.EventStore;
 import generalSimulator.Simulator;
 import hairdresser.Customer;
+import hairdresser.CustomerArrives;
 import hairdresser.HairdressState;
+import hairdresser.FIFO;
 
 public class Main extends Simulator{
 	
@@ -16,9 +18,10 @@ public class Main extends Simulator{
         HairdressState state = new HairdressState();
         HaidressView view = new HaidressView(state);
         Customer customer;
-        for (int i = 0; i< 995; i++) {
-        	customer = hairdresser.NewCustomer.create();
-        	customer. 
+
+        customer = hairdresser.NewCustomer.create();
+        store.add(new CustomerArrives(state, store, customer));
+    
         	
         }
     //k�r simulatorn som k�r alla event
