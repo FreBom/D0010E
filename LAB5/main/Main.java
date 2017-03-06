@@ -17,7 +17,7 @@ public class Main extends Simulator{
 	   
 	}
 	
-    public void start() {
+    public void run() {
         EventStore store = new EventStore();
         State state = new HairdressState();
         HairdressView view = new HairdressView();
@@ -27,10 +27,11 @@ public class Main extends Simulator{
         	customer = hairdresser.NewCustomer.create();
         	store.add(new CustomerArrives(state, store, customer));
         }
-        	
-        }
-    //kï¿½r simulatorn som kï¿½r alla event
+        start(); //kör alla event 	
+       
     }
+    //kï¿½r simulatorn som kï¿½r alla event
+
 		
 //		HairdressState state = new HairdressState();
 //		EventStore store = new EventStore();
