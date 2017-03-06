@@ -27,7 +27,7 @@ public class FIFO extends generalSimulator.EventStore{
 	
 	/**
 	 * 
-	 * @return the number of hairCuttingChairs that are not being use at this time.
+	 * @return the number of hairCuttingChairs that are not being used at this time.
 	 */
 	public static int idle(){
 		return numberOfCuttingChairs - customerGettingHaircut.size();

@@ -31,7 +31,9 @@ public class EventStore extends Observable {
 	 * 
 	 * @param e
 	 *            is the event that will be added to the list. Note that this
-	 *            add method will add two events in time order.
+	 *            add method will add two events in time order. and if they
+	 *            occur at the same time they simply are added one after another
+	 *            beased on when the add method is called.
 	 */
 	public void add(Event e) {
 

@@ -10,8 +10,14 @@ public class CustomerArrives extends Event {
 
 	private Customer customer;
 	private HairdressState state;
-
-	public CustomerArrives() {
+	
+	/**
+	 * this method creates a new customer and sets the general simulators time 
+	 * @Question1 is <b>this.</b>customer required? Isn't customer enough?
+	 * @Question2 What does the following code even do? What <b> time </b> is this? : <code> time = Simulator.getSimTime() + this.state.timeToArrival(); </code> 
+	 *  
+	 */
+	public CustomerArrives() {//TODO answer question 1 and 2 please.
 		this.customer = NewCustomer.create();
 		time = Simulator.getSimTime() + this.state.timeToArrival();
 
