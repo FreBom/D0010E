@@ -11,8 +11,12 @@ public class StopEvent extends Event {
 	public StopEvent(double time) {
 		super(time);
 
+<<<<<<< HEAD
 	}
 
+=======
+	}
+>>>>>>> branch 'master' of https://github.com/FreBom/D0010E.git
 	public void activateEmergencyBreak(State s) {
 		s.setEmergencyBreak(true);
 	}
