@@ -2,8 +2,6 @@ package generalSimulator;
 
 import java.util.Observable;
 
-
-
 /**
  * 
  * @author arostr-5@student.ltu.se, fanny, dexmo
