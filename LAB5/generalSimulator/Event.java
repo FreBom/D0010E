@@ -9,7 +9,7 @@ package generalSimulator;
 public abstract class Event {
 		
 	
-	private double time;
+	double time;
 	
 	
 	public Event(double time) {
@@ -31,5 +31,14 @@ public abstract class Event {
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
+	
+    public boolean lessThan(Comparable y) {
+        Event e = (Event) y; 
+        return this.time < e.time;  //kollar om tiden nu är mindre en tiden för eventet
 
 }
+
+	public void execute(Simulator simulator) {
+		// TODO Auto-generated method stub
+		
+	}
