@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Observable;
 
 /**
- * 
+ * EventStore holds an Arraylist with events and different methods specified below.
  * @author arostr-5@student.ltu.se, fanny, dexmo
  *
  *
@@ -34,7 +34,12 @@ public class EventStore extends Observable {
 		}
 
 	}
-
+	/**
+	 * calls the setChanged(); and notifyObservers(); methods.
+	 * @return the first element in the eventList.
+	 * @throws NoSuchElementException if the eventList is empty.
+	 * 
+	 */
 	public Event first() {
 		if (eventList.isEmpty()) {
 			throw new NoSuchElementException();
@@ -46,11 +51,17 @@ public class EventStore extends Observable {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @return the eventLists length. 
+	 */
 	public int size() {
 		return eventList.size();
 	}
-
+	/**
+	 * 
+	 * @return <b> true </b> if empty else <b>false</b>
+	 */
 	public boolean isEmpty() {
 		if (eventList.size() == 0) {
 			return true;
@@ -58,11 +69,14 @@ public class EventStore extends Observable {
 		return false;
 
 	}
-
+	
 	public void clear() {
 		eventList.clear();
 	}
-
+	/**
+	 * 
+	 * @param E is the event that will be removed from the eventList
+	 */
 	public void remove(Event E) {
 		for (int i = 0; i < eventList.size(); i++) {
 			if (eventList.get(i) == E) {
@@ -71,7 +85,11 @@ public class EventStore extends Observable {
 		}
 
 	}
-
+	/**
+	 * removes the first element at index 0 in the eventList
+	 * @throws NoSuchElementException if the eventList is empty
+	 * 
+	 */
 	public void removeFirst() {
 		if (eventList.isEmpty()) {
 			throw new NoSuchElementException();

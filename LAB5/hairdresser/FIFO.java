@@ -20,7 +20,10 @@ public class FIFO extends generalSimulator.EventStore{
 	private int numberOfChairs = hairdresser.HairdressState.getNumberOfChairs(); //Vill s�tta den till antalet platser fr�n metoden getNumberOfchairs()
 	private boolean newCustomer;  //ska nog inte ligga h�r, alla objekt ska ha denna
 	
-	
+	/**
+	 * 
+	 * @return the number of hairCuttingChairs that are not being use at this time.
+	 */
 	public int idle(){
 		return numberOfChairs - customerGetHaircut.size();
 	}
