@@ -7,9 +7,7 @@ import hairdresser.HairdressState;
 
 public class Main extends Simulator{
 	
-	public static void main(String[] args){
-		new DiseaseSimulator().start();
-		
+	public static void main(String[] args){		
 	   
 	}
 	
@@ -23,7 +21,7 @@ public class Main extends Simulator{
         	customer. 
         	
         }
-    //kör simulatorn som kör alla event
+    //kï¿½r simulatorn som kï¿½r alla event
     }
 		
 //		HairdressState state = new HairdressState();
