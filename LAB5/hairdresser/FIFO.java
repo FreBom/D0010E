@@ -1,6 +1,11 @@
 package hairdresser;
 
 import java.util.ArrayList;
+/**
+ * 
+ * @author Dexmo ,Aron ,Fanny
+ *
+ */
 
 
 public class FIFO extends generalSimulator.EventStore{
@@ -62,7 +67,10 @@ public class FIFO extends generalSimulator.EventStore{
 		
 		}
 	}
-	
+	/**
+	 * 
+	 * @param readyCustomer
+	 */
 	public void addGetHaircut(Customer readyCustomer){  //kallas p� n�r en kund g�r och en plats blir ledig
 		for(int i = 0; i < customerGetHaircut.size() ; i++ ){  //kollar igenom listan f�r dem som klipper sig, tar bort den som var klar ur den listan
 			if(customerGetHaircut.get(i) == readyCustomer){
