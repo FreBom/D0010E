@@ -8,8 +8,8 @@ package generalSimulator;
  */
 public class StartEvent extends Event {
 
-	public StartEvent(double time) {
-		super(time);
+	public StartEvent() {
+		
 	}
 
 	public void execute(State state) {

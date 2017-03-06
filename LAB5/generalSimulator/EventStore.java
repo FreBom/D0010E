@@ -21,13 +21,9 @@ public class EventStore extends Observable {
 	 *            add method will add two events in time order.
 	 */
 	public void add(Event e) {
-		for (int i = 0; i < eventList.size() - 1; i++) {
-			if (e.getTime() >= eventList.get(i).getTime()) {// Fredrik (satte >=
-															// istället för > så
-															// att vi även kan
-															// sätta in evvent
-															// som sker i exakt
-															// samma tidspunkt.
+		
+		for (int i = 0; i < eventList.size() ; i++) {
+			if (e.getTime() >= eventList.get(i).getTime()) {
 				eventList.add(i, e);
 			}
 

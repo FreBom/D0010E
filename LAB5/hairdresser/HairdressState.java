@@ -7,14 +7,10 @@ import generalSimulator.Time;
 
 public class HairdressState extends State {
 	
-	protected final double currentTime = 0;
-	protected final double simStopTime = 7.0; 
-	
-	protected final int queueLength = 5;
-	protected final int numberOfChairs = 2;
-	
+	protected final static int queueLength = 5;
+	protected final static int numberOfChairs = 2;
 	protected static final double probDissatisfied = 0.5;
-	
+	protected static final double simStopTime = 7.0; 
 	// Entry rate per 1/lambda
 	protected final double lambda = 4.0;
 	protected final static long seed = 1116;
@@ -24,17 +20,18 @@ public class HairdressState extends State {
 	
 	// dmin & dmax, time it takes for dissatisfied customer to return.
 	protected final double dmin = 1.0, dmax = 2.0;
-	
+	protected static String eventName = "";
+	//protected double currentTime = 0;
+		
 	
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
 	private UniformRandomStream cutTime = new UniformRandomStream(hmin, hmax, seed);
 	private UniformRandomStream returnTime = new UniformRandomStream(dmin, dmax, seed);
 	
 	
-	public double newEventTime() {
-		currentTime += entryRate.next();
+	public double timeToArrival() {
+		return entryRate.next();
 		
-		return currentTime;
 	}
 	
 	public double getCutTime() {
@@ -57,15 +54,15 @@ public class HairdressState extends State {
 		return seed;
 	}
 
-	public int getQueueLength() {// kanske b�ttre med protected
+	public static int getQueueLength() {
 		return queueLength;
 	}
 
-	public int getNumberOfChairs() {
+	public static int getNumberOfChairs() {
 		return numberOfChairs;
 	}
 	
-	public double getSimStopTime(){
+	public static double getSimStopTime(){
 		return simStopTime;
 	}
 	

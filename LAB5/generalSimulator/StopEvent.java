@@ -13,7 +13,6 @@ public class StopEvent extends Event {
 
 	}
 
-
 	public void activateEmergencyBreak(State s) {
 		s.setEmergencyBreak(true);
 	}
