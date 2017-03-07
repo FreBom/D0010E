@@ -13,7 +13,6 @@ public class Simulator {
 	private EventStore eventList;
 	private State state;
 	private View view;
-	private static double time;
 
 	public Simulator(State state, EventStore eventList, View view) {
 		this.eventList = eventList;
@@ -23,18 +22,16 @@ public class Simulator {
 	}
 
 	public static double getSimTime() {
-		return time;
+		return 0;
 	}
 
 	public void start() {
 		view.startPrint();
 		Event e;
-		while (!(eventList.isEmpty())) {
+		while (!state.getEmergencyBreak()) {
 			e = eventList.first();
 			e.execute(state);
-			time = e.getTime();
-			eventList.removeFirst();
-			eventList.first();
+//			time = e.getTime();
 
 		}
 		view.stopPrint();

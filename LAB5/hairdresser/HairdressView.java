@@ -2,6 +2,8 @@ package hairdresser;
 
 import java.util.Arrays;
 
+import generalSimulator.State;
+import generalSimulator.View;
 import hairdresser.FIFO;
 public class HairdressView extends View{
 	

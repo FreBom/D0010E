@@ -1,8 +1,7 @@
 package generalSimulator;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Observable;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 /**
  * EventStore holds an Arraylist with events and different methods specified
@@ -12,57 +11,33 @@ import java.util.Observable;
  *
  *
  */
-public class EventStore extends Observable {
+public class EventStore {
 
-	private ArrayList<Event> eventList = new ArrayList<Event>();// TODO varför
-																// har vi en
-																// eventlist här
-																// och en i i
-																// simulator,
-																// lätt att
-																// tappa bort
-																// sig vilken
-																// man menar?
-																// Förslag: byt
-																// namn på en av
-																// dem.
+	static class sortEvents implements Comparator<Event> {
 
-	/**
-	 * 
-	 * @param e
-	 *            is the event that will be added to the list. Note that this
-	 *            add method will add two events in time order. and if they
-	 *            occur at the same time they simply are added one after another
-	 *            beased on when the add method is called.
-	 */
-	public void add(Event e) {
-
-		for (int i = 0; i < eventList.size(); i++) {
-			if (e.getTime() >= eventList.get(i).getTime()) {
-				eventList.add(i, e);
+		public int compare(Event e1, Event e2) {
+			if (e1.getTime() < e2.getTime()) {
+				return -1;
+			}
+			if (e1.getTime() > e2.getTime()) {
+				return +1;
+			} else {
+				return 0;
 			}
 
 		}
+	}
+
+	sortEvents sort = new sortEvents();
+	PriorityQueue<Event> eventList = new PriorityQueue<Event>(sort);
+
+	public void add(Event e) {
+		eventList.offer(e);
 
 	}
 
-	/**
-	 * calls the setChanged(); and notifyObservers(); methods.
-	 * 
-	 * @return the first element in the eventList.
-	 * @throws NoSuchElementException
-	 *             if the eventList is empty.
-	 * 
-	 */
 	public Event first() {
-		if (eventList.isEmpty()) {
-			throw new NoSuchElementException();
-		} else {
-			setChanged();
-			notifyObservers();
-
-			return eventList.get(0);
-		}
+		return eventList.poll();
 
 	}
 
@@ -79,44 +54,7 @@ public class EventStore extends Observable {
 	 * @return <b> true </b> if empty else <b>false</b>
 	 */
 	public boolean isEmpty() {
-		if (eventList.size() == 0) {
-			return true;
-		}
-		return false;
+		return eventList.size() == 0 ? true : false;
 
 	}
-
-	public void clear() {
-		eventList.clear();
-	}
-
-	/**
-	 * 
-	 * @param E
-	 *            is the event that will be removed from the eventList
-	 */
-	public void remove(Event E) {
-		for (int i = 0; i < eventList.size(); i++) {
-			if (eventList.get(i) == E) {
-				eventList.remove(i);
-			}
-		}
-
-	}
-
-	/**
-	 * removes the first element at index 0 in the eventList
-	 * 
-	 * @throws NoSuchElementException
-	 *             if the eventList is empty
-	 * 
-	 */
-	public void removeFirst() {
-		if (eventList.isEmpty()) {
-			throw new NoSuchElementException();
-		} else {
-			eventList.remove(0);
-		}
-	}
-
 }
