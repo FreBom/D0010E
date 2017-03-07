@@ -10,11 +10,6 @@ public abstract class Event {
 
 	public double time;
 	
-//	public Event(double time) {
-//		this.time = time;
-//	
-//	}
-
 	/**
 	 * 
 	 * @return the time of this object
