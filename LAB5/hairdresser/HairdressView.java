@@ -19,6 +19,7 @@ public class HairdressView extends View{
 		this.event = event;
 		this.customer = customer;
 		this.fifo = fifo;
+		state.addObserver(this);
 	}
 	
 	public void update(Observable o, Object arg) { // MELLANHAND!
@@ -108,7 +109,7 @@ public class HairdressView extends View{
 		
 	}
 	
-	public void endPrint() {
+	public void stopPrint() {
 		System.out.println("Number of customers cut: ......: " + fifo.getCustomers());
 		System.out.println("Average cutting time...........: ");
 		System.out.println("Average queueing time: ........: ");
@@ -118,11 +119,6 @@ public class HairdressView extends View{
 		System.out.println("Time chairs were idle: ........: ");
 	}
 
-	@Override
-	public void stopPrint() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 

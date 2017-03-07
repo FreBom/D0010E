@@ -15,10 +15,7 @@ public class Main{
 	
 
 	public static void main(String[] args){		
-	   
-	}
-	
-    public void run() {
+
         EventStore store = new EventStore();
         FIFO fifo = new FIFO();
         State state = new HairdressState();
@@ -31,7 +28,7 @@ public class Main{
 
         sim.start(); 	
        
-    }
 
+	}
 
 }

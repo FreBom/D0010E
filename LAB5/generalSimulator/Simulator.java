@@ -30,9 +30,13 @@ public class Simulator {
 		view.startPrint();
 		Event e;
 		while (!state.getEmergencyBreak()) { // Alt. !isEmpty()
+			
 			e = eventList.getFirstAndRemove();
 			e.execute(state, this);
 			time = e.getTime();
+			state.notifyObservers();
+			
+			
 
 		}
 		view.stopPrint();
