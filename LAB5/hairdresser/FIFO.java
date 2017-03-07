@@ -90,6 +90,14 @@ public class FIFO extends EventStore {
 	 */
 	public static void removeLast() {//TODO make dynamic and remove the @NOTE tag above!
 		newCustomerQueue.remove(-1);
+		
+	}
+	/**
+	 * 
+	 * @param customerQueue The queue that we want to remove the last element from.
+	 */
+	public void NEWremoveLast(ArrayList<Customer> customerQueue){
+		customerQueue.remove(-1);
 	}
 	/**
 	 * 
