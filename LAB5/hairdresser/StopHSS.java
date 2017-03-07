@@ -6,14 +6,16 @@ import generalSimulator.StopEvent;
 public class StopHSS  extends StopEvent {
 	
 	public StopHSS(double time) {
-		// samla ihop tid
+		
 		
 	}
 	
 	public void execute(State state) {
-		activateEmergencyBreak(state);
 		
+		// samla ihop tid
+		activateEmergencyBreak(state);
 	}
+	
 	
 	
 	

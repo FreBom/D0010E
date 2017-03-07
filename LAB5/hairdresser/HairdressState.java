@@ -24,6 +24,7 @@ public class HairdressState extends State {
 	protected final static double dmax = 2.0;
 	protected static String eventName = "";
 	//protected double currentTime = 0;
+	private double stateTime; 
 		
 	
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
@@ -75,6 +76,10 @@ public class HairdressState extends State {
 	
 	public static double[] dArray() {
 		return new double[] {dmin, dmax};
+	}
+	public void setTime(double time) {
+		stateTime = time;
+		
 	}
 	
 

@@ -8,7 +8,14 @@ package generalSimulator;
  */
 public abstract class Event {
 
-	public double time;
+	protected double time;
+	protected EventStore store;
+	
+	public Event(double time, EventStore store) {
+		this.time = time;
+		this.store = store;	
+		
+	}
 	
 	/**
 	 * 
