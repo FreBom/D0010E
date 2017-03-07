@@ -10,10 +10,11 @@ import java.util.Observer;
  */
 public abstract class View implements Observer {
 	
+	State state;
 	
 	
-	public void display(){
-		
+	public View(State state){
+		this.state = state;
 	}
 	
 	public abstract void startPrint();

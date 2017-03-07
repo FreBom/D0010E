@@ -12,14 +12,16 @@ public class HairdressState extends State {
 	protected static final double probDissatisfied = 0.5;
 	protected static final double simStopTime = 7.0; 
 	// Entry rate per 1/lambda
-	protected final double lambda = 4.0;
+	protected final static double lambda = 4.0;
 	protected final static long seed = 1116;
 	
 	// hmin & hmax, time with specified interval it takes to cut the hair.
-	protected final double hmin = 0.5, hmax = 1.0;
+	protected final static double hmin = 0.5;
+	protected final static double hmax = 1.0;
 	
 	// dmin & dmax, time it takes for dissatisfied customer to return.
-	protected final double dmin = 1.0, dmax = 2.0;
+	protected final static double dmin = 1.0;
+	protected final static double dmax = 2.0;
 	protected static String eventName = "";
 	//protected double currentTime = 0;
 		
@@ -66,15 +68,15 @@ public class HairdressState extends State {
 		return simStopTime;
 	}
 	
-	public double getLambda() {
+	public static double getLambda() {
 		return lambda;
 	}
 	
-	public double[] hArray() {
+	public static double[] hArray() {
 		return new double[] {hmin, hmax};
 	}
 	
-	public double[] dArray() {
+	public static double[] dArray() {
 		return new double[] {dmin, dmax};
 	}
 	
