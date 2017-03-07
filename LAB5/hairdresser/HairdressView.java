@@ -1,6 +1,7 @@
 package hairdresser;
 
 import java.util.Arrays;
+import java.util.Observable;
 
 import generalSimulator.State;
 import generalSimulator.View;
@@ -13,7 +14,9 @@ public class HairdressView extends View{
 		super(state);
 	}
 	
-	
+	public void update(Observable o, Object arg) {
+		
+	}
 	public void startPrint(){ // Se Simulator start():
 		
 		System.out.println("Closing time of the day ..............: " + HairdressState.getSimStopTime());
@@ -26,9 +29,8 @@ public class HairdressView extends View{
 		System.out.println("Seed used in pseudo random generator .: " + HairdressState.seed);
 		
 		
-		
-		
 	}
+	
 	public void endPrint() {
 		System.out.println("Number of customers cut: ......: " + FIFO.getCustomers());
 		System.out.println("Average cutting time...........: ");
