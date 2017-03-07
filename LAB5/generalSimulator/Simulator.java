@@ -2,6 +2,9 @@ package generalSimulator;
 
 import java.util.Observable;
 
+import hairdresser.StartHSS;
+import hairdresser.StopHSS;
+
 /**
  * 
  * @author arostr-5@student.ltu.se, fanny, dexmo
@@ -15,10 +18,14 @@ public class Simulator {
 	private View view;
 	private double time;
 
-	public Simulator(State state, EventStore eventList, View view) {
-		this.eventList = eventList;
+	public Simulator(State state) {
+		eventList = new EventStore();
+		view = new View(state);
+		
 		this.state = state;
-		this.view = view;
+		
+	    store.add(new StartHSS(0.00, store, fifo));
+	    store.add(new StopHSS(999));
 
 	}
 

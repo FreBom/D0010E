@@ -22,75 +22,21 @@ public class HairdressView extends View{
 		state.addObserver(this);
 	}
 	
-	public void update(Observable o, Object arg) { // MELLANHAND!
+	public void update(Observable o, Object arg) { 
 		
-		switch(state.eventName) {
-		
-		case ("Start"): 
-			System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", "- Time" , "Event", "Id", "Idle", "TIdle", "TWait", "InQ", "Cut", "Lost", "Ret -");
-			System.out.format("%s %2", event.getTime(), "Start");
-			break;
-		case ("Arrived"):
-			System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
-					event.getTime(), 
-					"Arrived", 
-					customer.getID(),
-					fifo.idle(),
-					//TIDLE,
-					//TWAIT
-					fifo.numWaiting(),
-					//Cut
-					fifo.getNumLost()
-					//RET
-					);
-		break;
-		case("Return"):
-			System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
-					event.getTime(), 
-					"Return", 
-					customer.getID(),
-					fifo.idle(),
-					//TIDLE,
-					//TWAIT
-					fifo.numWaiting(),
-					//Cut
-					fifo.getNumLost()
-					//RET
-					);
-		break;
-		case("Done"):			
-			System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
-				event.getTime(), 
-				"Return", 
-				customer.getID(),
-				fifo.idle(),
-				//TIDLE,
-				//TWAIT
-				fifo.numWaiting(),
-				//Cut
-				fifo.getNumLost()
-				//RET
-				);
-		break;
-		case("Stop"):
-			System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", 		
-					event.getTime(), 
-					"Return", 
-					customer.getID(),
-					fifo.idle(),
-					//TIDLE,
-					//TWAIT
-					fifo.numWaiting(),
-					//Cut
-					fifo.getNumLost()
-					//RET
-					); 
-
-		break;
-		
-		case("Closing"):
-			break;
-		}
+		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", "- Time" , "Event", "Id", "Idle", "TIdle", "TWait", "InQ", "Cut", "Lost", "Ret -");
+		System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
+			event.getTime(), 
+			state.eventName, 
+			customer.getID(),
+			fifo.idle(),
+			//TIDLE,
+			//TWAIT
+			fifo.numWaiting(),
+			//Cut
+			fifo.getNumLost()
+			//RET
+			);		
 		
 		
 		
