@@ -7,6 +7,8 @@ import hairdresser.Customer;
 import hairdresser.CustomerArrives;
 import hairdresser.HairdressState;
 import hairdresser.HairdressView;
+import hairdresser.StartHSS;
+import hairdresser.StopHSS;
 import hairdresser.FIFO;
 
 public class Main extends Simulator{
@@ -22,11 +24,13 @@ public class Main extends Simulator{
         State state = new HairdressState();
         HairdressView view = new HairdressView();
         Customer customer;
-        int randomCustomer = (int) (Math.floor(Math.random() * (maxCustomer - minCustomer + 1)) + minCustomer);
-        for(int i = 1; i <= randomCustomer; i++){
-        	customer = hairdresser.NewCustomer.create();
-        	store.add(new CustomerArrives(state, store, customer));
-        }
+        store.add(new StartHSS());
+        store.add(new StopHSS());
+//        int randomCustomer = (int) (Math.floor(Math.random() * (maxCustomer - minCustomer + 1)) + minCustomer);
+//        for(int i = 1; i <= randomCustomer; i++){
+//        	customer = hairdresser.NewCustomer.create();
+//        	store.add(new CustomerArrives(state, store, customer));
+//        }
         start(); //kör alla event 	
        
     }

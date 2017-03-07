@@ -3,30 +3,30 @@ package hairdresser;
 
 import generalSimulator.Event;
 import generalSimulator.EventStore;
+import generalSimulator.Simulator;
 import generalSimulator.State;
-import hairdresserState.Customer;
 import hairdresser.CustomerDissatisfied;
 
 public class CustomerLeaves extends Event{
 	
-	HairdressState state;
-	EventStore store;
-	double time;
+	private Customer customer;
+	private HairdressState state;
 	
-	public CustomerLeaves(State state, EventStore store, Customer readyCustomer){  
-		this.state = (HairdressState) state;
-		this.store = store;
-		time = this.state.newEventTime();
+	public CustomerLeaves(Customer customer){  
+		this.customer = customer;
+		time = Simulator.getSimTime() + this.state.getCutTime();
 		
 		
 	}
 	
-	public void execute(State state, EventStore store, Customer readyCustomer) {
-		boolean diss = CustomerDissatisfied.getDissatisfied();
-		if(diss){
-			store.add(CustomerReturns.CustomerReturns(state, store , readyCustomer));
+	public void execute(State state, Customer customer, EventStore store) {
+		HairdressState.eventName = "Return";
+		
+		if(CustomerDissatisfied.getDissatisfied()){
+			
+			store.add(new CustomerReturns(customer));
 		}
-		FIFO.addGetHaircut(readyCustomer);  
+		FIFO.addGetHaircut(customer);  
 		
 		
 	}
