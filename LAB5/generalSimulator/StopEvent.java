@@ -13,7 +13,7 @@ public class StopEvent extends Event {
 	}
 
 	@Override
-	public void execute(State state) {
+	public void execute(State state, Simulator sim) {
 		// TODO Auto-generated method stub
 
 	}

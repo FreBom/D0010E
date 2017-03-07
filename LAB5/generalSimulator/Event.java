@@ -18,7 +18,7 @@ public abstract class Event {
 		return time;
 	}
 	
-	public abstract void execute(State state);
+	public abstract void execute(State state, Simulator sim);
 		// TODO Auto-generated method stub
 
 	
@@ -26,9 +26,6 @@ public abstract class Event {
 		return this.getClass().getSimpleName();
 	}
 
-	/**
-	 * 
-	 * @param simulator the simulator that you want to run.
-	 */
+
 
 }

@@ -36,7 +36,7 @@ public class EventStore {
 
 	}
 
-	public Event first() {
+	public Event getFirstAndRemove() {
 		return eventList.poll();
 
 	}

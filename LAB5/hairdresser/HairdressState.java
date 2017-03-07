@@ -7,8 +7,8 @@ import generalSimulator.Time;
 
 public class HairdressState extends State {
 	
-	protected final static int queueLength = 5;
-	protected final static int numberOfChairs = 2;
+	protected final int queueLength = 5;
+	protected final int numberOfChairs = 2;
 	protected static final double probDissatisfied = 0.5;
 	protected static final double simStopTime = 7.0; 
 	// Entry rate per 1/lambda
@@ -54,14 +54,6 @@ public class HairdressState extends State {
 	
 	public long getSeed() {
 		return seed;
-	}
-
-	public static int getQueueLength() {
-		return queueLength;
-	}
-
-	public static int getNumberOfChairs() {
-		return numberOfChairs;
 	}
 	
 	public static double getSimStopTime(){

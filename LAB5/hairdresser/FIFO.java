@@ -5,6 +5,7 @@ import hairdresser.Customer;
 
 import generalSimulator.EventStore;
 import generalSimulator.Simulator;
+import generalSimulator.State;
 
 /**
  * 
@@ -12,7 +13,7 @@ import generalSimulator.Simulator;
  *
  */
 
-public class FIFO extends EventStore {
+public class FIFO extends HairdressState {
 	private static int numLost = 0;
 	private static int numCustomers = 0;
 
@@ -24,13 +25,13 @@ public class FIFO extends EventStore {
 		return numCustomers - numLost;
 	}
 
-	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();//var static
-	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();//var static
-	private ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();//var static
+	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();
+	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
+	private ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();
 
-	private static int queueLength = HairdressState.getQueueLength();//ska vara static etersom vi inte vill förändra udner run time.
-	private static int numberOfCuttingChairs = HairdressState.getNumberOfChairs();//ska vara static --||--
-
+	private int maxQueueLength = queueLength;
+	private int numberOfCuttingChairs = numberOfChairs;
+	
 	/**
 	 * 
 	 * @return the number of hairCuttingChairs that are not being used at this
@@ -57,7 +58,7 @@ public class FIFO extends EventStore {
 	 * @NOTE this add method adds a customer to the Arraylist : <b>newCustomerQueue</b>
 	 */
 	public void addNew(Customer customer) {//var static
-		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == queueLength) {
+		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == maxQueueLength) {
 			numLost++;
 		} else {
 
@@ -71,7 +72,7 @@ public class FIFO extends EventStore {
 	 * @NOTE this add method adds a customer to the Arraylist : <b>oldCustomerQueue</b>
 	 */
 	public void addOld(Customer customer) {
-		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == queueLength) {
+		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == maxQueueLength) {
 			NEWremoveLast(newCustomerQueue);//removeLast();
 			numLost++;
 		}
@@ -105,7 +106,7 @@ public class FIFO extends EventStore {
 	 * @param state 
 	 * @param store
 	 */
-	public void addGetHaircut(Customer readyCustomer, HairdressState state, FIFO store) {//var static samt bytte från Eventstore till FIFO
+	public void addGetHaircut(Customer readyCustomer, HairdressState state, EventStore store, Simulator sim) {//var static samt bytte från Eventstore till FIFO
 		for (int i = 0; i < customerGettingHaircut.size(); i++) {
 			if (customerGettingHaircut.get(i) == readyCustomer) {
 				customerGettingHaircut.remove(i);
@@ -116,15 +117,15 @@ public class FIFO extends EventStore {
 		if (oldCustomerQueue.size() >= i) {
 			customerInQueue = oldCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
-			store.add(new CustomerLeaves(customerInQueue, Simulator.getSimTime() + state.getCutTime(), store));
+			store.add(new CustomerLeaves(customerInQueue, sim.getSimTime() + state.getCutTime(), store, this));
 			oldCustomerQueue.remove(0);
 		} else if (newCustomerQueue.size() >= i) {
 			customerInQueue = newCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
-			store.add(new CustomerLeaves(customerInQueue, Simulator.getSimTime() + state.getCutTime(), store));
+			store.add(new CustomerLeaves(customerInQueue, sim.getSimTime() + state.getCutTime(), store, this));
 			newCustomerQueue.remove(0);
 		}
-		// lägg tull event leave
+	
 	}
 
 }
