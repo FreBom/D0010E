@@ -49,8 +49,7 @@ public class Simulator {
 	public void start() {
 		view.startPrint();
 		Event e;
-		while (!(state.getEmergencyBreak()) && !(eventList.isEmpty())) {
-
+		while (!(eventList.isEmpty())) {
 			e = eventList.first();
 			e.execute(this);
 			time = e.getTime();

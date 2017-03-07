@@ -8,25 +8,28 @@ import generalSimulator.State;
 import hairdresser.CustomerDissatisfied;
 
 public class CustomerLeaves extends Event{
-	
+	// Simulator.getSimTime() + this.state.getCutTime();
 	private Customer customer;
-	private HairdressState state;
+	private HairdressState HSState;
+	private EventStore store;
 	
-	public CustomerLeaves(Customer customer){  
+	public CustomerLeaves(Customer customer, double time, EventStore store){  
 		this.customer = customer;
-		time = Simulator.getSimTime() + this.state.getCutTime();
+		this.time = time;
+		this.store = store;
 		
 		
 	}
 	
-	public void execute(State state, Customer customer, EventStore store) {
+	public void execute(State state) {
+		HSState = (HairdressState) state;
 		HairdressState.eventName = "Return";
 		
 		if(CustomerDissatisfied.getDissatisfied()){
 			
-			store.add(new CustomerReturns(customer));
+			store.add(new CustomerReturns(customer, Simulator.getSimTime() + HSState.getReturnTime(), store));
 		}
-		FIFO.addGetHaircut(customer);  
+		FIFO.addGetHaircut(customer, HSState, store);  
 		
 		
 	}

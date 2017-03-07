@@ -5,6 +5,7 @@ import hairdresser.Customer;
 
 
 import generalSimulator.EventStore;
+import generalSimulator.Simulator;
 /**
  * 
  * @author Dexmo ,Aron ,Fanny
@@ -74,7 +75,7 @@ public class FIFO extends EventStore{
 		newCustomerQueue.remove(-1);	
 	}
 
-	public static void addGetHaircut(Customer readyCustomer){  
+	public static void addGetHaircut(Customer readyCustomer, HairdressState state, EventStore store){  
 		for(int i = 0; i < customerGettingHaircut.size() ; i++ ){  
 			if(customerGettingHaircut.get(i) == readyCustomer){
 				customerGettingHaircut.remove(i);
@@ -85,13 +86,13 @@ public class FIFO extends EventStore{
 		if(oldCustomerQueue.size() >= i) {  
 			customerInQueue = oldCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
-			EventStore.add(new CustomerLeaves(customerInQueue)); 
+			store.add(new CustomerLeaves(customerInQueue, Simulator.getSimTime() + state.getCutTime(), store)); 
 			oldCustomerQueue.remove(0); 
 		}
 		else if(newCustomerQueue.size() >= i) {  
 			customerInQueue = newCustomerQueue.get(0); 
 			customerGettingHaircut.add(customerInQueue);
-			EventStore.add(new CustomerLeaves(customerInQueue)); 
+			store.add(new CustomerLeaves(customerInQueue, Simulator.getSimTime() + state.getCutTime(), store)); 
 			newCustomerQueue.remove(0);	
 		}	
 		//lägg tull event leave
