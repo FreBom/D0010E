@@ -8,15 +8,12 @@ package generalSimulator;
  */
 public class StopEvent extends Event {
 
-	public StopEvent(double time) {
-		super(time);
-
-	public void activateEmergencyBreak(State s) {
-		s.setEmergencyBreak(true);
+	public void activateEmergencyBreak(State state) {
+		state.setEmergencyBreak(true);
 	}
 
 	@Override
-	public void execute(State state, EventStore store) {
+	public void execute(State state) {
 		// TODO Auto-generated method stub
 
 	}

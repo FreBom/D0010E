@@ -1,18 +1,17 @@
 package hairdresser;
 
-import generalSimulator.EventStore;
-import generalSimulator.StartEvent;
 import generalSimulator.State;
 import generalSimulator.StopEvent;
 
-public class StopHSS  extends StartEvent {
+public class StopHSS  extends StopEvent {
 	
-	public StopHSS() {
-		time = HairdressState.getSimStopTime();
-		// TODO Auto-generated constructor stub
+	public StopHSS(double time) {
+		// samla ihop tid
+		
 	}
 	
 	public void execute(State state) {
+		activateEmergencyBreak(state);
 		
 	}
 	
