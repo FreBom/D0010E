@@ -17,6 +17,7 @@ public class StartHSS extends Event {
 	
 	public void execute(State state) {
 		HSState = (HairdressState) state;
+		HairdressState.eventName = "StartHSS";
 		store.add(new CustomerArrives(Simulator.getSimTime() + HSState.timeToArrival(), store));
 	}
 	

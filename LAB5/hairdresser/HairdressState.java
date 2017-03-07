@@ -80,6 +80,7 @@ public class HairdressState extends State {
 		return new double[] {dmin, dmax};
 	}
 	
+	
 
 
 }

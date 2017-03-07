@@ -3,18 +3,29 @@ package hairdresser;
 import java.util.Arrays;
 import java.util.Observable;
 
+import generalSimulator.Event;
 import generalSimulator.State;
 import generalSimulator.View;
 import hairdresser.FIFO;
 public class HairdressView extends View{
 	
 	HairdressState state;
+	Event event;
 	
-	public HairdressView(State state) {
+	public HairdressView(State state, Event event) {
 		super(state);
+		this.event = event;
+
 	}
 	
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg) { // MELLANHAND!
+		
+		switch(event) {
+		
+		case (event.toString() == "Start"): 
+			
+		}
+		
 		
 	}
 	public void startPrint(){ // Se Simulator start():
