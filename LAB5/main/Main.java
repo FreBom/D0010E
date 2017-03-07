@@ -11,7 +11,7 @@ import hairdresser.StartHSS;
 import hairdresser.StopHSS;
 import hairdresser.FIFO;
 
-public class Main extends Simulator{
+public class Main{
 	
 
 	public static void main(String[] args){		
@@ -22,12 +22,14 @@ public class Main extends Simulator{
         EventStore store = new EventStore();
         FIFO fifo = new FIFO();
         State state = new HairdressState();
-        HairdressView view = new HairdressView(state, Event);
-        Customer customer;
+        HairdressView view = new HairdressView(state, null, null, fifo);
+        
+        Simulator sim = new Simulator(state, store, view);
+
         store.add(new StartHSS(0.00, store, fifo));
         store.add(new StopHSS(999));
 
-        start(); 	
+        sim.start(); 	
        
     }
 

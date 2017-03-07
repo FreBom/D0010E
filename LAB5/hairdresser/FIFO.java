@@ -14,7 +14,7 @@ import generalSimulator.State;
  */
 
 public class FIFO extends HairdressState {
-	private static int numLost = 0;
+	private int numLost = 0;
 	private static int numCustomers = 0;
 
 	/**
@@ -84,6 +84,10 @@ public class FIFO extends HairdressState {
 	 */
 	public int numWaiting() {
 		return (oldCustomerQueue.size() + newCustomerQueue.size());
+	}
+	
+	public int getNumLost() {
+		return numLost;
 	}
 	/*
 	 * Removes the last customer from the Arraylist: <code>newCustomerQueue</code>

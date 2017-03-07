@@ -25,7 +25,7 @@ public class CustomerLeaves extends Event{
 	
 	public void execute(State state, Simulator sim) {
 		HSState = (HairdressState) state;
-		HairdressState.eventName = "Return";
+		HairdressState.eventName = "Done";
 		
 		if(CustomerDissatisfied.getDissatisfied()){
 			
