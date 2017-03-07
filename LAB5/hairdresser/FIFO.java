@@ -1,6 +1,7 @@
 package hairdresser;
 
 import java.util.ArrayList;
+import hairdresser.Customer;
 
 
 import generalSimulator.EventStore;
@@ -11,7 +12,7 @@ import generalSimulator.EventStore;
  */
 
 
-public class FIFO extends generalSimulator.EventStore{
+public class FIFO extends EventStore{
 	private static int numLost = 0;
 	private static int numCustomers = 0;
 	public static int getCustomers() {
@@ -22,8 +23,8 @@ public class FIFO extends generalSimulator.EventStore{
 	private static ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
 	private static ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();
 	
-	private static int queueLength = hairdresser.HairdressState.getQueueLength(); 
-	private static int numberOfCuttingChairs = hairdresser.HairdressState.getNumberOfChairs(); 
+	private static int queueLength = HairdressState.getQueueLength(); 
+	private static int numberOfCuttingChairs = HairdressState.getNumberOfChairs(); 
 	
 	/**
 	 * 
@@ -82,14 +83,16 @@ public class FIFO extends generalSimulator.EventStore{
 		int i = 1; 
 		Customer customerInQueue;
 		if(oldCustomerQueue.size() >= i) {  
-			customerInQueue = oldCustomerQueue.get(i);
+			customerInQueue = oldCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
-			oldCustomerQueue.remove(i); 
+			EventStore.add(new CustomerLeaves(customerInQueue)); 
+			oldCustomerQueue.remove(0); 
 		}
 		else if(newCustomerQueue.size() >= i) {  
-			customerInQueue = newCustomerQueue.get(i); 
+			customerInQueue = newCustomerQueue.get(0); 
 			customerGettingHaircut.add(customerInQueue);
-			newCustomerQueue.remove(i);	
+			EventStore.add(new CustomerLeaves(customerInQueue)); 
+			newCustomerQueue.remove(0);	
 		}	
 		//lägg tull event leave
 	}
