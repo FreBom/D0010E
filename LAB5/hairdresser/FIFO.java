@@ -15,7 +15,7 @@ import generalSimulator.State;
 
 public class FIFO extends HairdressState {
 	private int numLost = 0;
-	private static int numCustomers = 0;
+	private int numCustomers = 0;
 
 	/**
 	 * 
