@@ -20,7 +20,7 @@ public class FIFO extends EventStore {
 	 * 
 	 * @return the total amount of customers that we have made a profit on
 	 */
-	public static int getCustomers() {
+	public int getCustomers() {//var static
 		return numCustomers - numLost;
 	}
 
