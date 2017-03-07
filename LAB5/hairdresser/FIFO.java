@@ -24,19 +24,19 @@ public class FIFO extends EventStore {
 		return numCustomers - numLost;
 	}
 
-	private static ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();
-	private static ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
-	private static ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();
+	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();//var static
+	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();//var static
+	private ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();//var static
 
-	private static int queueLength = HairdressState.getQueueLength();
-	private static int numberOfCuttingChairs = HairdressState.getNumberOfChairs();
+	private static int queueLength = HairdressState.getQueueLength();//ska vara static etersom vi inte vill förändra udner run time.
+	private static int numberOfCuttingChairs = HairdressState.getNumberOfChairs();//ska vara static --||--
 
 	/**
 	 * 
 	 * @return the number of hairCuttingChairs that are not being used at this
 	 *         time.
 	 */
-	public static int idle() {
+	public int idle() {//var static
 		return numberOfCuttingChairs - customerGettingHaircut.size();
 	}
 
@@ -47,7 +47,7 @@ public class FIFO extends EventStore {
 	 *            customerGettingHaircut
 	 */
 
-	public static void addCustomer(Customer customer) {
+	public void addCustomer(Customer customer) {//var static
 		customerGettingHaircut.add(customer);
 		numCustomers++;
 	}
@@ -56,7 +56,7 @@ public class FIFO extends EventStore {
 	 * @param customer is the customer that will be added or lost.
 	 * @NOTE this add method adds a customer to the Arraylist : <b>newCustomerQueue</b>
 	 */
-	public static void addNew(Customer customer) {
+	public void addNew(Customer customer) {//var static
 		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == queueLength) {
 			numLost++;
 		} else {
@@ -70,9 +70,9 @@ public class FIFO extends EventStore {
 	 * @param customer is the customer that will be added or lost.
 	 * @NOTE this add method adds a customer to the Arraylist : <b>oldCustomerQueue</b>
 	 */
-	public static void addOld(Customer customer) {
+	public void addOld(Customer customer) {
 		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == queueLength) {
-			removeLast();
+			NEWremoveLast(newCustomerQueue);//removeLast();
 			numLost++;
 		}
 		oldCustomerQueue.add(customer);
@@ -84,14 +84,14 @@ public class FIFO extends EventStore {
 	public int numWaiting() {
 		return (oldCustomerQueue.size() + newCustomerQueue.size());
 	}
-	/**
+	/*
 	 * Removes the last customer from the Arraylist: <code>newCustomerQueue</code>
 	 * @NOTE this method is static and we might want to change this.
-	 */
+	 *
 	public static void removeLast() {//TODO make dynamic and remove the @NOTE tag above!
 		newCustomerQueue.remove(-1);
 		
-	}
+	}*/
 	/**
 	 * 
 	 * @param customerQueue The queue that we want to remove the last element from.
@@ -105,7 +105,7 @@ public class FIFO extends EventStore {
 	 * @param state 
 	 * @param store
 	 */
-	public static void addGetHaircut(Customer readyCustomer, HairdressState state, EventStore store) {
+	public void addGetHaircut(Customer readyCustomer, HairdressState state, FIFO store) {//var static samt bytte från Eventstore till FIFO
 		for (int i = 0; i < customerGettingHaircut.size(); i++) {
 			if (customerGettingHaircut.get(i) == readyCustomer) {
 				customerGettingHaircut.remove(i);

@@ -11,9 +11,9 @@ public class CustomerLeaves extends Event{
 	// Simulator.getSimTime() + this.state.getCutTime();
 	private Customer customer;
 	private HairdressState HSState;
-	private EventStore store;
+	private FIFO store; //Bytte från EVentstore till FIFO
 	
-	public CustomerLeaves(Customer customer, double time, EventStore store){  
+	public CustomerLeaves(Customer customer, double time, FIFO store){  //Bytte från EVentstore till FIFO
 		this.customer = customer;
 		this.time = time;
 		this.store = store;
@@ -27,9 +27,9 @@ public class CustomerLeaves extends Event{
 		
 		if(CustomerDissatisfied.getDissatisfied()){
 			
-			store.add(new CustomerReturns(customer, Simulator.getSimTime() + HSState.getReturnTime(), store));
+			store.add(new CustomerReturns(customer, Simulator.getSimTime() + HSState.getReturnTime(), store));//FIFO
 		}
-		FIFO.addGetHaircut(customer, HSState, store);  
+		store.addGetHaircut(customer, HSState, store);  //FIFO
 		
 		
 	}
