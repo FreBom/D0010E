@@ -18,7 +18,7 @@ public class StopHSS  extends Event {
 	public void execute(State state) {
 		
 		HSState = (HairdressState) state;
-		HSState.setEventName("StopHSS");
+		HSState.setEventName(toString());
 		HSState.setTime(time);		
 		state.setEmergencyBreak(true);
 		

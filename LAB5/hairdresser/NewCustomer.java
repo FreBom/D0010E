@@ -2,7 +2,9 @@ package hairdresser;
 
 public class NewCustomer {
 
-	private static int id = 0;
+	private static int id = -1;
+
+	
 
 	/*
 	 * Create a new customer

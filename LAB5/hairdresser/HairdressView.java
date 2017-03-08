@@ -19,7 +19,7 @@ public class HairdressView extends View{
 	
 	public void update(Observable o, Object arg) { 
 		
-		if(HSState.getEventName() == "Enter" || HSState.getEventName() == "Done " || HSState.getEventName() == "Return") {
+		if(HSState.getEventName().equals("Enter")) {
 		
 		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", 
 			numberFormat.format(HSState.getTime()), 
@@ -29,27 +29,55 @@ public class HairdressView extends View{
 			"TIDLE",
 			"TWAIT",
 			HSState.getFIFO().numWaiting(),
-			HSState.getCustomerCut(),
+			HSState.getCutCustomer(),
 			HSState.getFIFO().getNumLost(),
-			HSState.getCustomerReturns()
+			HSState.getReturnCustomer()
 			);				
 		}
-		else if(HSState.getEventName() == "StopHSS") {
-		System.out.format("%s %2s %3s %6s %6s %7s %6s %6s %6s %6s %n", 
-			HSState.getTime(), 
+		else if (HSState.getEventName().equals("Done")) {
+			System.out.format("%s %5s %6s %6s %6s %7s %6s %6s %6s %6s %n",
+					numberFormat.format(HSState.getTime()), 
+					HSState.getEventName(), 
+					HSState.getCustomerID(),
+					HSState.getFIFO().idle(),
+					"TIDLE",
+					"TWAIT",
+					HSState.getFIFO().numWaiting(),
+					HSState.getCutCustomer(),
+					HSState.getFIFO().getNumLost(),
+					HSState.getReturnCustomer()
+					);	
+		}
+		else if(HSState.getEventName().equals("Return")) {
+			System.out.format("%s %2s %5s %6s %6s %7s %6s %6s %6s %6s %n",
+					numberFormat.format(HSState.getTime()), 
+					HSState.getEventName(), 
+					HSState.getCustomerID(),
+					HSState.getFIFO().idle(),
+					"TIDLE",
+					"TWAIT",
+					HSState.getFIFO().numWaiting(),
+					HSState.getCutCustomer(),
+					HSState.getFIFO().getNumLost(),
+					HSState.getReturnCustomer()
+					);
+		}
+		else if(HSState.getEventName().equals("StopHSS")){
+		System.out.format("%s %2s %3s %5s %6s %7s %6s %6s %6s %6s %n", 
+			numberFormat.format(HSState.getTime()), 
 			HSState.getEventName(), 
 			"",
 			HSState.getFIFO().idle(),
 			"TIDLE",
 			"TWAIT",
 			HSState.getFIFO().numWaiting(),
-			HSState.getCustomerCut(),
+			HSState.getCutCustomer(),
 			HSState.getFIFO().getNumLost(),
-			HSState.getCustomerReturns()
+			HSState.getReturnCustomer()
 			);
 		} else {
 			System.out.format("%s %2s %n", 
-					HSState.getTime(), 
+					numberFormat.format(HSState.getTime()), 
 					HSState.getEventName());
 		}
 	}
@@ -69,12 +97,12 @@ public class HairdressView extends View{
 	}
 	
 	public void stopPrint() {
-		System.out.println("Number of customers cut: ......: " + HSState.getCustomerCut());
+		System.out.println("Number of customers cut: ......: " + HSState.getCutCustomer());
 		System.out.println("Average cutting time...........: ");
 		System.out.println("Average queueing time: ........: ");
-		System.out.println("Largest queue (max NumWaiting) : ");
-		System.out.println("Customers not cut (NumLost) ...: ");
-		System.out.println("Dissatisfied customers: .......: ");
+		System.out.println("Largest queue (max NumWaiting) : " + HSState.getFIFO().getMax());
+		System.out.println("Customers not cut (NumLost) ...: " + HSState.getFIFO().getNumLost());
+		System.out.println("Dissatisfied customers: .......: " + HSState.getReturnCustomer());
 		System.out.println("Time chairs were idle: ........: ");
 	}
 

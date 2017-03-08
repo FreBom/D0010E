@@ -8,29 +8,32 @@ import generalSimulator.State;
 
 public class HairdressState extends State {
 	
-	public final static int queueLength = 5;
-	public final static int numberOfChairs = 2;
-	public final static double probDissatisfied = 0.5;
-	public final static double simStopTime = 7.0; 
+	public final static int queueLength = 4;
+	public final static int numberOfChairs = 3;
+	public final static double probDissatisfied = 0.25;
+	public final static double simStopTime = 8.0; 
 	// Entry rate per 1/lambda
-	public final static double lambda = 4.0;
+	public final static double lambda = 3.0;
 	public final static long seed = 1116;
 	
 	// hmin & hmax, time with specified interval it takes to cut the hair.
-	public final static double hmin = 0.5;
-	public final static double hmax = 1.0;
+	public final static double hmin = 0.8;
+	public final static double hmax = 1.2;
 	
 	// dmin & dmax, time it takes for dissatisfied customer to return.
-	public final static double dmin = 1.0;
-	public final static double dmax = 2.0;
+	public final static double dmin = 2.0;
+	public final static double dmax = 3.0;
 	
 	private String eventName = "";
 	private double stateTime;
-	private int customerReturns;
-	private int customerCut;
+	private int customerReturns = 0;
+	private int customerCut = 0;
 	int customerID;
-	private int totalCut;
+	private int totalCutCustomers;
 	private boolean isClosed = false;
+	
+	public final static double probDissatisfiedMin = 0.0;
+	public final static double probDissatisfiedMax = 1.0;
 	
 	private FIFO fifo;
 	
@@ -40,6 +43,31 @@ public class HairdressState extends State {
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
 	private UniformRandomStream cutTime = new UniformRandomStream(hmin, hmax, seed);
 	private UniformRandomStream returnTime = new UniformRandomStream(dmin, dmax, seed);
+	private UniformRandomStream disPro = new UniformRandomStream(probDissatisfiedMin, probDissatisfiedMax, seed);
+	
+	public void setCutCustomer() {
+		customerCut++;
+		
+	}
+
+	public int getCutCustomer() {
+		return customerCut;
+	}
+	
+	public void setReturnCustomer() {
+		customerReturns++;
+	}
+	
+	public int getReturnCustomer() {
+		return customerReturns;
+	}
+	
+	public boolean getDissatisfied() {
+		 if(disPro.next() < HairdressState.probDissatisfied)  {
+			 return true;
+		 }
+		return false;
+	}
 	
 	public HairdressState(){
 		fifo = new FIFO();
@@ -111,28 +139,8 @@ public class HairdressState extends State {
 	public double getTime() {
 		return stateTime;
 	}
+		
 	
-	public int getCustomerReturns() {
-		return customerReturns;
-	}
-	
-	public void setCustomerReturns(int customerReturns) {
-		this.customerReturns = customerReturns;
-	}
-	
-	public int getTotalCut() {
-		return totalCut;
-	}
-	
-	public void setTotalCut(int totalCut) {
-		this.totalCut = totalCut;
-	}
-	
-	public int getCustomerCut() {
-		customerCut = totalCut - customerReturns;
-		return customerCut;
-	}
-
 	public String getEventName() {
 		return eventName;
 	}
@@ -152,6 +160,8 @@ public class HairdressState extends State {
 	public int getCustomerID() {
 		return customerID;
 	}
+
+
 	
 
 	

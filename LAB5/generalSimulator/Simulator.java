@@ -1,9 +1,9 @@
 package generalSimulator;
 
 
-import hairdresser.ClosingHSS;
+import hairdresser.Closing;
+import hairdresser.HairdressState;
 import hairdresser.StartHSS;
-import hairdresser.StopHSS;
 
 /**
  * 
@@ -12,7 +12,7 @@ import hairdresser.StopHSS;
  *
  */
 public class Simulator {
-
+	
 	private EventStore eventList;
 	private State state;
 	private View view;
@@ -25,8 +25,7 @@ public class Simulator {
 		eventList = new EventStore();
 		
 		eventList.add(new StartHSS(0.00, eventList));
-	    eventList.add(new ClosingHSS(7.0, eventList));
-
+//HairdressState.simStopTime
 	}
 
 	public void start() {

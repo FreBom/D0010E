@@ -5,11 +5,11 @@ import generalSimulator.State;
 import generalSimulator.Event;
 import generalSimulator.EventStore;
 
-public class ClosingHSS extends Event{
+public class Closing extends Event{
 
 	HairdressState HSState;
 	
-	public ClosingHSS(double time, EventStore store) {
+	public Closing(double time, EventStore store) {
 		
 		super(time, store);
 		
@@ -20,7 +20,7 @@ public class ClosingHSS extends Event{
 	public void execute(State state) {
 	
 		HSState = (HairdressState) state;
-		HSState.setEventName("(Closing)");
+		HSState.setEventName(toString());
 		HSState.setTime(time);
 		HSState.setClosed(true);
 		
