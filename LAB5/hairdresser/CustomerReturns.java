@@ -20,7 +20,10 @@ public class CustomerReturns extends Event {
 		
 		HairdressState HSState = (HairdressState) state;
 		HSState.setEventName("Return");
+		HSState.customerID = customer.getID(customer);
 		HSState.setTime(time);
+		
+		HSState.setCustomerReturns(HSState.getCustomerReturns() + 1);
 		
 		if (HSState.getFIFO().idle() > 0) {
 			HSState.getFIFO().addCustomer(customer);
@@ -29,7 +32,7 @@ public class CustomerReturns extends Event {
 		} else {
 			HSState.getFIFO().addOld(customer);
 		} 
-		
+		HSState.update();
 	}
 
 

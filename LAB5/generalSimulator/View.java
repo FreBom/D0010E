@@ -21,11 +21,9 @@ public abstract class View implements Observer {
 	
 	public abstract void stopPrint();
 	
+	public void update(Observable o, Object arg) {
 	
-	public void update(Observable o, Obj arg) {
-		
-		
 	}
-
+	
 
 }

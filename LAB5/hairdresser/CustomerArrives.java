@@ -18,21 +18,24 @@ public class CustomerArrives extends Event {
 	public CustomerArrives(double time, EventStore store) {
 		
 		super(time, store);
-		this.customer = NewCustomer.create();
+		Customer customer = NewCustomer.create();
+		this.customer = customer;
 		
 	}
 
 	public void execute(State state) {
 		
 		HSState = (HairdressState) state;
-		HSState.setEventName("Arrived");
-		HSState.setTime(time);
-		HSState.setCustomerID(customer.getID());
+		
 		
 		
 		
 		if (!HSState.getIsClosed()) {
-
+			
+			HSState.setEventName("Enter");
+			HSState.setTime(time);
+			HSState.customerID = customer.getID(customer);
+			
 			if (HSState.getFIFO().idle() > 0) { 
 				HSState.getFIFO().addCustomer(customer);
 				store.add(new CustomerLeaves(customer, time + HSState.getCutTime(), store));
@@ -42,6 +45,7 @@ public class CustomerArrives extends Event {
 			} 
 			store.add(new CustomerArrives(time + HSState.timeToArrival(), store));
 		}
+		HSState.update();
 		
 
 	}

@@ -1,8 +1,7 @@
 package generalSimulator;
 
-import java.util.Observable;
 
-import hairdresser.HairdressState;
+import hairdresser.ClosingHSS;
 import hairdresser.StartHSS;
 import hairdresser.StopHSS;
 
@@ -26,20 +25,16 @@ public class Simulator {
 		eventList = new EventStore();
 		
 		eventList.add(new StartHSS(0.00, eventList));
-	    eventList.add(new StopHSS(999, eventList));
+	    eventList.add(new ClosingHSS(7.0, eventList));
 
 	}
 
 	public void start() {
 		view.startPrint();
-		
-		while (!eventList.isEmpty()) { 
-			
+		while (!eventList.isEmpty() && !state.getEmergencyBreak()) { 
 			e = eventList.getFirstAndRemove();
-			setChanged();
-			state.notifyObservers();
-			state.update(state, e);
 			e.execute(state);	
+			state.notifyObservers();
 			
 
 		}

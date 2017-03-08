@@ -22,17 +22,18 @@ public class CustomerLeaves extends Event{
 	public void execute(State state) {
 		
 		HSState = (HairdressState) state;
-		HSState.setEventName("Done");
+		HSState.setEventName("Done ");
+		HSState.customerID = customer.getID(customer);
 		HSState.setTime(time);
 		isDissatisfied = new DissatisfiedGenerator();
 		
 		if(isDissatisfied.getDissatisfied()){
 			
 			store.add(new CustomerReturns(customer, time + HSState.getReturnTime(), store));
-			HSState.setCustomerReturns(HSState.getCustomerReturns() + 1);
+			
 		}
 		HSState.getFIFO().addGetHaircut(customer, HSState, store, this);  
 		HSState.setTotalCut(HSState.getTotalCut() + 1);
-		
+		HSState.update();
 	}
 }

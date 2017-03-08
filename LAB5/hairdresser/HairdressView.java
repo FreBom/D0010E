@@ -1,42 +1,57 @@
 package hairdresser;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Observable;
-
-import generalSimulator.Event;
 import generalSimulator.State;
 import generalSimulator.View;
-import hairdresser.FIFO;
 public class HairdressView extends View{
 	
 
 	HairdressState HSState;
+	DecimalFormat numberFormat = new DecimalFormat("#.00");
 	
 	public HairdressView(State state) {
 		super(state);
-		state.addObserver(this);
 		HSState = (HairdressState) state;
+		HSState.addObserver(this);
 	}
 	
 	public void update(Observable o, Object arg) { 
 		
+		if(HSState.getEventName() == "Enter" || HSState.getEventName() == "Done " || HSState.getEventName() == "Return") {
 		
-		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", "- Time" , "Event", "Id", "Idle", "TIdle", "TWait", "InQ", "Cut", "Lost", "Ret -");
-		System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
-			HSState.getTime(), 
+		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", 
+			numberFormat.format(HSState.getTime()), 
 			HSState.getEventName(), 
 			HSState.getCustomerID(),
 			HSState.getFIFO().idle(),
-			//TIDLE,
-			//TWAIT
+			"TIDLE",
+			"TWAIT",
 			HSState.getFIFO().numWaiting(),
-			//Cut
-			HSState.getFIFO().getNumLost()
-			//RET
-			);		
-		
-		
-		
+			HSState.getCustomerCut(),
+			HSState.getFIFO().getNumLost(),
+			HSState.getCustomerReturns()
+			);				
+		}
+		else if(HSState.getEventName() == "StopHSS") {
+		System.out.format("%s %2s %3s %6s %6s %7s %6s %6s %6s %6s %n", 
+			HSState.getTime(), 
+			HSState.getEventName(), 
+			"",
+			HSState.getFIFO().idle(),
+			"TIDLE",
+			"TWAIT",
+			HSState.getFIFO().numWaiting(),
+			HSState.getCustomerCut(),
+			HSState.getFIFO().getNumLost(),
+			HSState.getCustomerReturns()
+			);
+		} else {
+			System.out.format("%s %2s %n", 
+					HSState.getTime(), 
+					HSState.getEventName());
+		}
 	}
 	public void startPrint(){ // Se Simulator start():
 		
@@ -48,6 +63,7 @@ public class HairdressView extends View{
 		System.out.println("dmin and dmax (return time interval) .: " + Arrays.toString(HairdressState.dArray()));
 		System.out.println("Risk dissatisfied returns: ...........: " + HairdressState.probDissatisfied);
 		System.out.println("Seed used in pseudo random generator .: " + HairdressState.seed);
+		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", "- Time" , "Event", "Id", "Idle", "TIdle", "TWait", "InQ", "Cut", "Lost", "Ret -");
 		
 		
 	}

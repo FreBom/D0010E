@@ -11,8 +11,8 @@ public class Customer {
 	 * 
 	 * @return the ID (identification tag) of the specific customer object
 	 */
-	public int getID(){
-		return this.id;
+	public int getID(Customer customer){
+		return  this.id;
 	}
 }
 

@@ -22,6 +22,7 @@ public class StartHSS extends Event {
 		HSState.setTime(time);
 	
 		store.add(new CustomerArrives(time + HSState.timeToArrival(), store));
+		HSState.update();
 		
 	}
 	

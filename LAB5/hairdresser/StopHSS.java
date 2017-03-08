@@ -22,7 +22,7 @@ public class StopHSS  extends Event {
 		HSState.setTime(time);		
 		state.setEmergencyBreak(true);
 		
-		
+		HSState.update();
 		
 	}
 	

@@ -27,7 +27,7 @@ public class ClosingHSS extends Event{
 		
 		store.add(new StopHSS(999.0, store));
 		
-		
+		HSState.update();
 	}
 	
 	

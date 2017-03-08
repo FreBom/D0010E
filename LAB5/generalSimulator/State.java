@@ -2,9 +2,9 @@ package generalSimulator;
 
 import java.util.Observable;
 
-public class State extends Observable {
+public class State extends Observable{
 
-	private boolean emergencyBreak = true;
+	private boolean emergencyBreak = false;
 
 	/**
 	 * 
@@ -23,9 +23,5 @@ public class State extends Observable {
 	}
 
 
-	public void update(Observable o, Object arg) {
-		setChanged();
-		notifyObservers();
-	}
 
 }

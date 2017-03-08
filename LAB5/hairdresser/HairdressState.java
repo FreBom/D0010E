@@ -28,7 +28,7 @@ public class HairdressState extends State {
 	private double stateTime;
 	private int customerReturns;
 	private int customerCut;
-	private int customerID;
+	int customerID;
 	private int totalCut;
 	private boolean isClosed = false;
 	
@@ -48,7 +48,10 @@ public class HairdressState extends State {
 	public FIFO getFIFO() {
 		return fifo;
 	}
-	
+	public void update() {
+		setChanged();
+		notifyObservers();
+	}
 	
 	public static int getQueueLength() {
 		return queueLength;
@@ -145,15 +148,12 @@ public class HairdressState extends State {
 	public void setClosed(boolean isClosed) {
 		this.isClosed = isClosed;
 	}
-
-	public void setCustomerID(int id) {
-		this.customerID = id;
-		
-	}
 	
 	public int getCustomerID() {
 		return customerID;
 	}
+	
+
 	
 	
 

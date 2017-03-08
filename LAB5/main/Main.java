@@ -1,16 +1,10 @@
 package main;
 
-import generalSimulator.EventStore;
+
 import generalSimulator.Simulator;
 import generalSimulator.State;
-import generalSimulator.View;
-import hairdresser.Customer;
-import hairdresser.CustomerArrives;
 import hairdresser.HairdressState;
 import hairdresser.HairdressView;
-import hairdresser.StartHSS;
-import hairdresser.StopHSS;
-import hairdresser.FIFO;
 
 public class Main{
 	
