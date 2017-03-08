@@ -16,12 +16,10 @@ public class Simulator {
 
 	private EventStore eventList;
 	private State state;
-	private View view;
 
 	public Simulator(State state) {
 		
 		this.state = state;
-		view = new View(state);
 		
 		eventList = new EventStore();
 		eventList.add(new StartHSS(0.00, eventList));

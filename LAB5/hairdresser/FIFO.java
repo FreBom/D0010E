@@ -75,7 +75,7 @@ public class FIFO  {
 	 * @NOTE this add method adds a customer to the Arraylist : <b>newCustomerQueue</b>
 	 */
 	public void addNew(Customer customer) {
-		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == maxQueueLength) {
+		if (getQueueSize() == maxQueueLength) {
 			numLost++;
 		} else {
 
@@ -89,7 +89,7 @@ public class FIFO  {
 	 * @NOTE this add method adds a customer to the Arraylist : <b>oldCustomerQueue</b>
 	 */
 	public void addOld(Customer customer) {
-		if ((oldCustomerQueue.size() + newCustomerQueue.size()) == maxQueueLength) {
+		if ((getQueueSize()) == maxQueueLength) {
 			if(newCustomerQueue.size() > 0){
 				removeLast(newCustomerQueue);//removeLast();
 				oldCustomerQueue.add(customer);
@@ -142,6 +142,10 @@ public class FIFO  {
 			newCustomerQueue.remove(0);
 		}
 	
+	}
+	
+	public int getQueueSize(){
+		return oldCustomerQueue.size() + newCustomerQueue.size();
 	}
 
 }

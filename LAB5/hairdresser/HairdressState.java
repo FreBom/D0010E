@@ -32,6 +32,8 @@ public class HairdressState extends State {
 	private boolean isClosed = false;
 	
 	private FIFO fifo;
+	
+	private double timeWaitingTotal;
 		
 	
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
@@ -66,8 +68,11 @@ public class HairdressState extends State {
 		return returnTime.next();
 	}
 	
-	public int timeWaitingTotal(){ //total tid någon har stått i kö
-		return 0;
+	public double timeWaitingTotal(){ //total tid någon har stått i kö
+		if (fifo.getQueueSize() > 0){
+			
+		}
+		return ;
 	}
 	
 	public int timeIdle(){ // total tid en klippstol är ledig

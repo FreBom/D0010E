@@ -1,5 +1,6 @@
 package generalSimulator;
 
+import java.util.Observable;
 import java.util.Observer;
 /**
  * 
@@ -21,7 +22,11 @@ public abstract class View implements Observer {
 	public abstract void stopPrint();
 	
 	
-	
+	public void update(Observable o, Obj arg) {
+		
+		view();
+		
+	}
 
 
 }
