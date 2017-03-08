@@ -22,12 +22,13 @@ public class Closing extends Event{
 		HSState = (HairdressState) state;
 		HSState.setEventName(toString());
 		HSState.setTime(time);
-		HSState.setClosed(true);
-		
-		
-		store.add(new StopHSS(999.0, store));
 		
 		HSState.update();
+		
+		HSState.setClosed(true);
+		store.add(new StopHSS(999.0, store));
+		
+		
 	}
 	
 	

@@ -20,11 +20,11 @@ public class StartHSS extends Event {
 		HSState = (HairdressState) state;
 		HSState.setEventName(toString());
 		HSState.setTime(time);
-	
 		store.add(new Enter(time + HSState.timeToArrival(), store));
 	    store.add(new Closing(8.00, store));
-
-		HSState.update();
+	    
+	    HSState.update();
+		
 		
 	}
 	

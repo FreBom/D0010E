@@ -25,12 +25,12 @@ public class Simulator {
 		eventList = new EventStore();
 		
 		eventList.add(new StartHSS(0.00, eventList));
-//HairdressState.simStopTime
+
 	}
 
 	public void start() {
 		view.startPrint();
-		while (!eventList.isEmpty() && !state.getEmergencyBreak()) { 
+		while (!state.getEmergencyBreak()) { 
 			e = eventList.getFirstAndRemove();
 			e.execute(state);	
 			state.notifyObservers();

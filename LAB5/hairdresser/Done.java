@@ -9,7 +9,6 @@ public class Done extends Event{
 
 	private Customer customer;
 	HairdressState HSState;
-	private int customerCut;
 	
 	public Done(Customer customer, double time, EventStore store){  
 		super(time, store);
@@ -22,7 +21,12 @@ public class Done extends Event{
 		HSState = (HairdressState) state;
 		HSState.setEventName(toString());
 		HSState.customerID = customer.getID(customer);
+		
+		
+		updateWaitTime(HSState);
+		updateIdleTime(HSState);
 		HSState.setTime(time);
+		HSState.update();
 		
 		if(customer.getHasCut() == false){
 			
@@ -31,15 +35,24 @@ public class Done extends Event{
 			
 		}
 				
-		
 		if(HSState.getDissatisfied()){
 			
 			store.add(new Return(customer, time + HSState.getReturnTime(), store));
-			
+		
 		}
 		HSState.getFIFO().addGetHaircut(customer, HSState, store);  
-//		HSState.setTotalCut(HSState.getTotalCutCustomers() + 1);
-		HSState.update();
+		
+	}
+	
+	public void updateWaitTime(HairdressState HSState) {
+		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (time - HSState.getTime()));
+	
+	}
+	
+	public void updateIdleTime(HairdressState HSState) {
+		HSState.addIdleTime((HSState.getFIFO().idle()) * (time - HSState.getTime()));
+		
+		
 	}
 	
 

@@ -26,8 +26,8 @@ public class HairdressView extends View{
 			HSState.getEventName(), 
 			HSState.getCustomerID(),
 			HSState.getFIFO().idle(),
-			"TIDLE",
-			"TWAIT",
+			numberFormat.format(HSState.getTotalIdleTime()),
+			numberFormat.format(HSState.getTotalWaitingTime()),
 			HSState.getFIFO().numWaiting(),
 			HSState.getCutCustomer(),
 			HSState.getFIFO().getNumLost(),
@@ -40,8 +40,8 @@ public class HairdressView extends View{
 					HSState.getEventName(), 
 					HSState.getCustomerID(),
 					HSState.getFIFO().idle(),
-					"TIDLE",
-					"TWAIT",
+					numberFormat.format(HSState.getTotalIdleTime()),
+					numberFormat.format(HSState.getTotalWaitingTime()),
 					HSState.getFIFO().numWaiting(),
 					HSState.getCutCustomer(),
 					HSState.getFIFO().getNumLost(),
@@ -54,8 +54,8 @@ public class HairdressView extends View{
 					HSState.getEventName(), 
 					HSState.getCustomerID(),
 					HSState.getFIFO().idle(),
-					"TIDLE",
-					"TWAIT",
+					numberFormat.format(HSState.getTotalIdleTime()),
+					numberFormat.format(HSState.getTotalWaitingTime()),
 					HSState.getFIFO().numWaiting(),
 					HSState.getCutCustomer(),
 					HSState.getFIFO().getNumLost(),
@@ -68,8 +68,8 @@ public class HairdressView extends View{
 			HSState.getEventName(), 
 			"",
 			HSState.getFIFO().idle(),
-			"TIDLE",
-			"TWAIT",
+			numberFormat.format(HSState.getTotalIdleTime()),
+			numberFormat.format(HSState.getTotalWaitingTime()),
 			HSState.getFIFO().numWaiting(),
 			HSState.getCutCustomer(),
 			HSState.getFIFO().getNumLost(),
@@ -98,12 +98,13 @@ public class HairdressView extends View{
 	
 	public void stopPrint() {
 		System.out.println("Number of customers cut: ......: " + HSState.getCutCustomer());
-		System.out.println("Average cutting time...........: ");
-		System.out.println("Average queueing time: ........: ");
+		System.out.println("Average cutting time...........: " + numberFormat.format(HSState.getAverageCutTime()));
+		System.out.println("Average queueing time: ........: " + numberFormat.format(HSState.getAverageQueueTime()));
 		System.out.println("Largest queue (max NumWaiting) : " + HSState.getFIFO().getMax());
 		System.out.println("Customers not cut (NumLost) ...: " + HSState.getFIFO().getNumLost());
 		System.out.println("Dissatisfied customers: .......: " + HSState.getReturnCustomer());
-		System.out.println("Time chairs were idle: ........: ");
+		System.out.println("Time chairs were idle: ........: " + numberFormat.format(HSState.getTotalIdleTime()));
+
 	}
 
 	

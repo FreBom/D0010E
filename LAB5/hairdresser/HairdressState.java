@@ -29,15 +29,16 @@ public class HairdressState extends State {
 	private int customerReturns = 0;
 	private int customerCut = 0;
 	int customerID;
-	private int totalCutCustomers;
 	private boolean isClosed = false;
+	private double totalWaitingTime;
+	private double totalIdleTime;
+	private double averageCutTime;
 	
 	public final static double probDissatisfiedMin = 0.0;
 	public final static double probDissatisfiedMax = 1.0;
 	
 	private FIFO fifo;
-	
-	private double timeWaitingTotal;
+
 		
 	
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
@@ -45,9 +46,9 @@ public class HairdressState extends State {
 	private UniformRandomStream returnTime = new UniformRandomStream(dmin, dmax, seed);
 	private UniformRandomStream disPro = new UniformRandomStream(probDissatisfiedMin, probDissatisfiedMax, seed);
 	
+	
 	public void setCutCustomer() {
 		customerCut++;
-		
 	}
 
 	public int getCutCustomer() {
@@ -99,18 +100,7 @@ public class HairdressState extends State {
 	public double getReturnTime() {
 		return returnTime.next();
 	}
-	
-	public double timeWaitingTotal(){ //total tid någon har stått i kö
-		if (fifo.getQueueSize() > 0){
-			
-		}
-		return 0;
-	}
-	
-	public int timeIdle(){ // total tid en klippstol är ledig
-		return 0;
-	}
-	
+		
 	public long getSeed() {
 		return seed;
 	}
@@ -159,6 +149,35 @@ public class HairdressState extends State {
 	
 	public int getCustomerID() {
 		return customerID;
+	}
+
+	public void addWaitingTime(double waitingTime) {
+		this.totalWaitingTime += waitingTime;
+		
+	}
+
+	public void addIdleTime(double idleTime) {
+		this.totalIdleTime += idleTime;
+		
+	}
+	public double getTotalIdleTime() {
+		return totalIdleTime;
+	}
+	
+	public double getTotalWaitingTime() {
+		return totalWaitingTime;
+	}
+	
+	public void setAverageCutTime(double averageCutTime) {
+		this.averageCutTime += averageCutTime;
+	}
+	
+	public double getAverageCutTime() {
+		return averageCutTime / customerCut;
+	}
+	
+	public double getAverageQueueTime() {
+		return totalWaitingTime / customerCut;
 	}
 
 

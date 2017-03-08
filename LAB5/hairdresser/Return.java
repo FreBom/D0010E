@@ -8,8 +8,8 @@ import generalSimulator.EventStore;
 public class Return extends Event {
 	
 	private Customer customer;
+	private double tempCutTime;
 	HairdressState HSState;
-	private int returns;
 
 	
 	public Return(Customer customer, double time, EventStore store){
@@ -22,7 +22,13 @@ public class Return extends Event {
 		HSState = (HairdressState) state;
 		HSState.setEventName(toString());
 		HSState.customerID = customer.getID(customer);
+		
+		
+		updateWaitTime(HSState);
+		updateIdleTime(HSState);	
 		HSState.setTime(time);
+		HSState.update();
+		
 		if(customer.getHasReturn() == false) {
 			HSState.setReturnCustomer();
 			customer.getHasReturn();
@@ -30,12 +36,26 @@ public class Return extends Event {
 		
 		if (HSState.getFIFO().idle() > 0) {
 			HSState.getFIFO().addCustomer(customer);
-			store.add(new Done(customer, time + HSState.getCutTime(), store));
-
+			tempCutTime = HSState.getCutTime();
+			store.add(new Done(customer, time + tempCutTime, store));
+			HSState.setAverageCutTime(tempCutTime);
+		
+		
 		} else {
 			HSState.getFIFO().addOld(customer);
 		} 
-		HSState.update();
+		
+	}
+	
+	public void updateWaitTime(HairdressState HSState) {
+		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (time - HSState.getTime()));
+	
+	}
+	
+	public void updateIdleTime(HairdressState HSState) {
+		HSState.addIdleTime((HSState.getFIFO().idle()) * (time - HSState.getTime()));
+		
+		
 	}
 
 

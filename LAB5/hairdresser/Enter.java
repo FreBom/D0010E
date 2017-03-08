@@ -9,6 +9,7 @@ import hairdresser.FIFO;
 public class Enter extends Event {
 
 	private Customer customer;
+	private double tempCutTime;
 	HairdressState HSState;
 
 	/**
@@ -30,21 +31,38 @@ public class Enter extends Event {
 		if (!HSState.getIsClosed()) {
 			
 			HSState.setEventName(toString());
-			HSState.setTime(time);
 			HSState.customerID = customer.getID(customer);
+			
+			
+			updateWaitTime(HSState);
+			updateIdleTime(HSState);
+			HSState.setTime(time);
+			HSState.update();
+	
 			
 			if (HSState.getFIFO().idle() > 0) { 
 				HSState.getFIFO().addCustomer(customer);
-				store.add(new Done(customer, time + HSState.getCutTime(), store));
-
+				tempCutTime = HSState.getCutTime();
+				store.add(new Done(customer, time + tempCutTime, store));
+				HSState.setAverageCutTime(tempCutTime);
 			} else {
 				HSState.getFIFO().addNew(customer);
 			} 
 			store.add(new Enter(time + HSState.timeToArrival(), store));
 		}
-		HSState.update();
+		
 		
 
+	}
+	public void updateWaitTime(HairdressState HSState) {
+		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (time - HSState.getTime()));
+	
+	}
+	
+	public void updateIdleTime(HairdressState HSState) {
+		HSState.addIdleTime((HSState.getFIFO().idle()) * (time - HSState.getTime()));
+		
+		
 	}
 
 }

@@ -19,6 +19,7 @@ public class FIFO  {
 	private int numLost = 0;
 	private int numCustomers = 0;
 	private int max;
+	private double tempCutTime;
 	
 	/**
 	 * 
@@ -160,12 +161,19 @@ public class FIFO  {
 		if (oldCustomerQueue.size() >= i) {
 			customerInQueue = oldCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
-			store.add(new Done(customerInQueue, state.getTime()  + state.getCutTime(), store));
+			tempCutTime = state.getCutTime();
+
+			store.add(new Done(customerInQueue, state.getTime()  + tempCutTime, store));
+			state.setAverageCutTime(tempCutTime);
+			
 			oldCustomerQueue.remove(0);
 		} else if (newCustomerQueue.size() >= i) {
 			customerInQueue = newCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
-			store.add(new Done(customerInQueue, state.getTime() + state.getCutTime(), store));
+			tempCutTime = state.getCutTime();
+
+			store.add(new Done(customerInQueue, state.getTime()  + tempCutTime, store));
+			state.setAverageCutTime(tempCutTime);
 			newCustomerQueue.remove(0);
 		}
 	
