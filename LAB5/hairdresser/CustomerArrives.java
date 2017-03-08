@@ -27,6 +27,7 @@ public class CustomerArrives extends Event {
 		HSState = (HairdressState) state;
 		HSState.setEventName("Arrived");
 		HSState.setTime(time);
+		HSState.setCustomerID(customer.getID());
 		
 		
 		

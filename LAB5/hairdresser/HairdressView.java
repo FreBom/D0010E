@@ -9,14 +9,11 @@ import generalSimulator.View;
 import hairdresser.FIFO;
 public class HairdressView extends View{
 	
-	Event event;
-	Customer customer;
+
 	HairdressState HSState;
 	
-	public HairdressView(State state, Event event, Customer customer) {
+	public HairdressView(State state) {
 		super(state);
-		this.event = event;
-		this.customer = customer;
 		state.addObserver(this);
 		HSState = (HairdressState) state;
 	}
@@ -26,9 +23,9 @@ public class HairdressView extends View{
 		
 		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", "- Time" , "Event", "Id", "Idle", "TIdle", "TWait", "InQ", "Cut", "Lost", "Ret -");
 		System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
-			event.getTime(), 
+			HSState.getTime(), 
 			HSState.getEventName(), 
-			customer.getID(),
+			HSState.getCustomerID(),
 			HSState.getFIFO().idle(),
 			//TIDLE,
 			//TWAIT

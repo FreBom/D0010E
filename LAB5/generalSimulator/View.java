@@ -24,7 +24,6 @@ public abstract class View implements Observer {
 	
 	public void update(Observable o, Obj arg) {
 		
-		view();
 		
 	}
 

@@ -28,6 +28,7 @@ public class HairdressState extends State {
 	private double stateTime;
 	private int customerReturns;
 	private int customerCut;
+	private int customerID;
 	private int totalCut;
 	private boolean isClosed = false;
 	
@@ -72,7 +73,7 @@ public class HairdressState extends State {
 		if (fifo.getQueueSize() > 0){
 			
 		}
-		return ;
+		return 0;
 	}
 	
 	public int timeIdle(){ // total tid en klippstol är ledig
@@ -102,6 +103,10 @@ public class HairdressState extends State {
 	public void setTime(double time) {
 		stateTime = time;
 		
+	}
+	
+	public double getTime() {
+		return stateTime;
 	}
 	
 	public int getCustomerReturns() {
@@ -139,6 +144,15 @@ public class HairdressState extends State {
 
 	public void setClosed(boolean isClosed) {
 		this.isClosed = isClosed;
+	}
+
+	public void setCustomerID(int id) {
+		this.customerID = id;
+		
+	}
+	
+	public int getCustomerID() {
+		return customerID;
 	}
 	
 	

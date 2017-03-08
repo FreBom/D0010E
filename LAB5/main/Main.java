@@ -17,14 +17,11 @@ public class Main{
 
 	public static void main(String[] args){		
 		
-//		FIFO fifo = new FIFO();
 		
-        EventStore store = new EventStore();
+
         State state = new HairdressState();
-        
         HairdressView view = new HairdressView(state);
-        
-        Simulator sim = new Simulator(state);
+        Simulator sim = new Simulator(state, view);
 
         sim.start(); 	
        
