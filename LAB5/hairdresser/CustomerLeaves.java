@@ -5,12 +5,13 @@ import generalSimulator.Event;
 import generalSimulator.EventStore;
 import generalSimulator.Simulator;
 import generalSimulator.State;
-import hairdresser.CustomerDissatisfied;
+import hairdresser.DissatisfiedGenerator;
 
 public class CustomerLeaves extends Event{
 
 	private Customer customer;
 	HairdressState HSState;
+	DissatisfiedGenerator isDissatisfied;
 	
 	public CustomerLeaves(Customer customer, double time, EventStore store){  
 		super(time, store);
@@ -21,15 +22,16 @@ public class CustomerLeaves extends Event{
 	public void execute(State state) {
 		
 		HSState = (HairdressState) state;
-		HSState.eventName = "Done";
+		HSState.setEventName("Done");
 		HSState.setTime(time);
+		isDissatisfied = new DissatisfiedGenerator();
 		
-		if(CustomerDissatisfied.getDissatisfied()){
+		if(isDissatisfied.getDissatisfied()){
 			
-			store.add(new CustomerReturns(customer, time + HSState.getReturnTime(), store, fifo));
+			store.add(new CustomerReturns(customer, time + HSState.getReturnTime(), store));
 			HSState.setCustomerReturns(HSState.getCustomerReturns() + 1);
 		}
-		fifo.addGetHaircut(customer, HSState, store);  
+		HSState.getFIFO().addGetHaircut(customer, HSState, store, this);  
 		HSState.setTotalCut(HSState.getTotalCut() + 1);
 		
 	}

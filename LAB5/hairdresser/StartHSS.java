@@ -8,6 +8,7 @@ public class StartHSS extends Event {
 
 	HairdressState HSState;
 	
+	
 	public StartHSS(double time, EventStore store) {
 		super(time, store);
 		
@@ -15,10 +16,13 @@ public class StartHSS extends Event {
 	}
 	
 	public void execute(State state) {
-		HSState = (HairdressState) state;
-		HSState.eventName = "StartHSS";
 		
+		HSState = (HairdressState) state;
+		HSState.setEventName("StartHSS");
+		HSState.setTime(time);
+	
 		store.add(new CustomerArrives(time + HSState.timeToArrival(), store));
+		
 	}
 	
 	

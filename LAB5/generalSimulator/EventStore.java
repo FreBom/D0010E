@@ -29,7 +29,7 @@ public class EventStore {
 	}
 
 	sortEvents sort = new sortEvents();
-	PriorityQueue<Event> eventList = new PriorityQueue<Event>(sort);
+	PriorityQueue<Event> eventList = new PriorityQueue<Event>(10, sort); // sort
 
 	public void add(Event e) {
 		eventList.offer(e);

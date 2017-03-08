@@ -9,32 +9,32 @@ import generalSimulator.View;
 import hairdresser.FIFO;
 public class HairdressView extends View{
 	
-	HairdressState state;
 	Event event;
 	Customer customer;
-	FIFO fifo;
+	HairdressState HSState;
 	
-	public HairdressView(State state, Event event, Customer customer, FIFO fifo) {
+	public HairdressView(State state, Event event, Customer customer) {
 		super(state);
 		this.event = event;
 		this.customer = customer;
-		this.fifo = fifo;
 		state.addObserver(this);
+		HSState = (HairdressState) state;
 	}
 	
 	public void update(Observable o, Object arg) { 
 		
+		
 		System.out.format("%s %2s %6s %6s %6s %7s %6s %6s %6s %6s %n", "- Time" , "Event", "Id", "Idle", "TIdle", "TWait", "InQ", "Cut", "Lost", "Ret -");
 		System.out.format("%s %2 %6 %6s %6s %7s %6s %6s %6s %6s %n", 
 			event.getTime(), 
-			state.eventName, 
+			HSState.getEventName(), 
 			customer.getID(),
-			fifo.idle(),
+			HSState.getFIFO().idle(),
 			//TIDLE,
 			//TWAIT
-			fifo.numWaiting(),
+			HSState.getFIFO().numWaiting(),
 			//Cut
-			fifo.getNumLost()
+			HSState.getFIFO().getNumLost()
 			//RET
 			);		
 		
@@ -56,7 +56,7 @@ public class HairdressView extends View{
 	}
 	
 	public void stopPrint() {
-		System.out.println("Number of customers cut: ......: " + fifo.getCustomers());
+		System.out.println("Number of customers cut: ......: " + HSState.getCustomerCut());
 		System.out.println("Average cutting time...........: ");
 		System.out.println("Average queueing time: ........: ");
 		System.out.println("Largest queue (max NumWaiting) : ");

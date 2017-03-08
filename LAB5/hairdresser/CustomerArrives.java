@@ -25,22 +25,23 @@ public class CustomerArrives extends Event {
 	public void execute(State state) {
 		
 		HSState = (HairdressState) state;
-		HSState.eventName = "Arrived";
+		HSState.setEventName("Arrived");
 		HSState.setTime(time);
 		
 		
 		
-		if (!HSState.getEmergencyBreak()) {
+		if (!HSState.getIsClosed()) {
 
-			if (HSState.idle() > 0) { 
-				fifo.addCustomer(customer);
-				store.add(new CustomerLeaves(customer, time + HSState.getCutTime(), store, fifo));//FIFO
+			if (HSState.getFIFO().idle() > 0) { 
+				HSState.getFIFO().addCustomer(customer);
+				store.add(new CustomerLeaves(customer, time + HSState.getCutTime(), store));
 
 			} else {
-				fifo.addNew(customer);
+				HSState.getFIFO().addNew(customer);
 			} 
-			store.add(new CustomerArrives(time + HSState.timeToArrival(), store, fifo));//FIFO
+			store.add(new CustomerArrives(time + HSState.timeToArrival(), store));
 		}
+		
 
 	}
 

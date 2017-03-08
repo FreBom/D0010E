@@ -2,6 +2,7 @@ package generalSimulator;
 
 import java.util.Observable;
 
+import hairdresser.HairdressState;
 import hairdresser.StartHSS;
 import hairdresser.StopHSS;
 
@@ -16,32 +17,29 @@ public class Simulator {
 	private EventStore eventList;
 	private State state;
 	private View view;
-	private double time;
 
 	public Simulator(State state) {
-		eventList = new EventStore();
-		view = new View(state);
 		
 		this.state = state;
+		view = new View(state);
 		
-	    store.add(new StartHSS(0.00, store, fifo));
-	    store.add(new StopHSS(999));
+		eventList = new EventStore();
+		eventList.add(new StartHSS(0.00, eventList));
+	    eventList.add(new StopHSS(999, eventList));
 
 	}
-
-//	public double getSimTime() {
-//		return time;
-//	}
 
 	public void start() {
 		view.startPrint();
 		Event e;
-		while (!state.getEmergencyBreak()) { 
+		while (!eventList.isEmpty()) { 
 			
 			e = eventList.getFirstAndRemove();
+//			setChanged();
+//			notifyObservers(e);
+			state.update(state, e);
 			e.execute(state);
-			time = e.getTime();
-			state.notifyObservers();
+			
 			
 			
 
