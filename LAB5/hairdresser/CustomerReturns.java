@@ -7,7 +7,6 @@ import generalSimulator.EventStore;
 
 public class CustomerReturns extends Event {
 	
-	// Simulator.getSimTime() + this.state.getReturnTime();
 	private Customer customer;
 
 	

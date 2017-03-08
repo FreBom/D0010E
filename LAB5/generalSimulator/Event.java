@@ -25,7 +25,7 @@ public abstract class Event {
 		return time;
 	}
 	
-	public abstract void execute(State state, Simulator sim);
+	public abstract void execute(State state);
 		// TODO Auto-generated method stub
 
 	

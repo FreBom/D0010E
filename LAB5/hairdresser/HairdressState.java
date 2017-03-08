@@ -2,8 +2,9 @@ package hairdresser;
 
 import random.ExponentialRandomStream;
 import random.UniformRandomStream;
+import generalSimulator.EventStore;
+import generalSimulator.Simulator;
 import generalSimulator.State;
-import generalSimulator.Time;
 
 public class HairdressState extends State {
 	
@@ -23,13 +24,28 @@ public class HairdressState extends State {
 	protected final static double dmin = 1.0;
 	protected final static double dmax = 2.0;
 	protected static String eventName = "";
-	//protected double currentTime = 0;
-	private double stateTime; 
-		
+
+	private double stateTime;
+	private int customerReturns;
+	private int customerCut;
+	private int totalCut;
+	
+	private FIFO fifo;
+	
+	private int numLost = 0;
+	private int numCustomers = 0;
+	
+	
 	
 	private ExponentialRandomStream entryRate = new ExponentialRandomStream(lambda, seed);
 	private UniformRandomStream cutTime = new UniformRandomStream(hmin, hmax, seed);
 	private UniformRandomStream returnTime = new UniformRandomStream(dmin, dmax, seed);
+	
+	public HairdressState(FIFO fifo){
+		this.fifo = fifo;
+	}
+	
+	
 	
 	public static int getQueueLength() {
 		return queueLength;
@@ -81,7 +97,70 @@ public class HairdressState extends State {
 		stateTime = time;
 		
 	}
+	public int getCustomerReturns() {
+		return customerReturns;
+	}
+	public void setCustomerReturns(int customerReturns) {
+		this.customerReturns = customerReturns;
+	}
+	public int getTotalCut() {
+		return totalCut;
+	}
+	public void setTotalCut(int totalCut) {
+		this.totalCut = totalCut;
+	}
+	public int getCustomerCut() {
+		customerCut = totalCut - customerReturns;
+		return customerCut;
+	}
 	
+	
+	public void addGetHaircut(Customer customer, HairdressState state, EventStore store, Simulator sim) {
+		fifo.removeGettingHaircut(customer);
+		
+		int i = 1;
+		Customer customerInQueue;
+		if (fifo.oldCustomerQueue.size() >= i) {
+			customerInQueue = fifo.oldCustomerQueue.get(0);
+			fifo.customerGettingHaircut.add(customerInQueue);
+			store.add(new CustomerLeaves(customerInQueue, sim.getSimTime() + state.getCutTime(), store, this));
+			fifo.oldCustomerQueue.remove(0);
+		} else if (fifo.newCustomerQueue.size() >= i) {
+			customerInQueue= fifo.newCustomerQueue.get(0);
+			fifo.customerGettingHaircut.add(customerInQueue);
+			store.add(new CustomerLeaves(customerInQueue, sim.getSimTime() + state.getCutTime(), store, this));
+			fifo.newCustomerQueue.remove(0);
+		}
+	
+	}
+	
+	public void addNew(Customer customer) {
+		if ((fifo.oldCustomerQueue.size() + fifo.newCustomerQueue.size()) == queueLength ) {
+			numLost++;
+		} else {
 
+			fifo.newCustomerQueue.add(customer);
+		}
+		numCustomers++;
+	}
+	
+	public void addOld(Customer customer) {
+		if ((fifo.oldCustomerQueue.size() + fifo.newCustomerQueue.size()) == queueLength) {
+			
+			if(fifo.newCustomerQueue.size() > 0){
+				fifo.removeLast(fifo.newCustomerQueue);//removeLast();
+				fifo.oldCustomerQueue.add(customer);
+			
+			}
+			numLost++;
+			
+		} else {
+		fifo.oldCustomerQueue.add(customer);}
+	}
+
+	public void addCustomer(Customer customer) {
+		fifo.customerGettingHaircut.add(customer);
+		numCustomers++;
+	}
 
 }

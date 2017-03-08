@@ -29,17 +29,17 @@ public class Simulator {
 
 	}
 
-	public double getSimTime() {
-		return time;
-	}
+//	public double getSimTime() {
+//		return time;
+//	}
 
 	public void start() {
 		view.startPrint();
 		Event e;
-		while (!state.getEmergencyBreak()) { // Alt. !isEmpty()
+		while (!state.getEmergencyBreak()) { 
 			
 			e = eventList.getFirstAndRemove();
-			e.execute(state, this);
+			e.execute(state);
 			time = e.getTime();
 			state.notifyObservers();
 			

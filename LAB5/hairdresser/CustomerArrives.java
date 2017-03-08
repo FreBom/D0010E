@@ -15,7 +15,7 @@ public class CustomerArrives extends Event {
 	 * this method creates a new customer and sets the general simulators time
 	 *  
 	 */
-	public CustomerArrives(double time, EventStore store) {//Byttefrån EventStore
+	public CustomerArrives(double time, EventStore store) {
 		
 		super(time, store);
 		this.customer = NewCustomer.create();
@@ -30,9 +30,9 @@ public class CustomerArrives extends Event {
 		
 		
 		
-		if (!state.getEmergencyBreak()) {
+		if (!HSState.getEmergencyBreak()) {
 
-			if (fifo.idle() > 0) { 
+			if (HSState.idle() > 0) { 
 				fifo.addCustomer(customer);
 				store.add(new CustomerLeaves(customer, time + HSState.getCutTime(), store, fifo));//FIFO
 

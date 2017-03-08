@@ -27,9 +27,10 @@ public class CustomerLeaves extends Event{
 		if(CustomerDissatisfied.getDissatisfied()){
 			
 			store.add(new CustomerReturns(customer, time + HSState.getReturnTime(), store, fifo));
+			HSState.setCustomerReturns(HSState.getCustomerReturns() + 1);
 		}
 		fifo.addGetHaircut(customer, HSState, store);  
-		
+		HSState.setTotalCut(HSState.getTotalCut() + 1);
 		
 	}
 }

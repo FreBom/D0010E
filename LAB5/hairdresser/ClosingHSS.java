@@ -1,5 +1,27 @@
 package hairdresser;
 
-public class ClosingHSS {
+import generalSimulator.Event;
 
+public class ClosingHSS extends Event{
+
+	
+	
+	public ClosingHSS() {
+		
+		
+		
+		
+		
+	}
+	public void execute(State state) {
+	
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 }

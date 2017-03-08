@@ -18,8 +18,9 @@ public class Main{
 		
 		FIFO fifo = new FIFO();
         EventStore store = new EventStore();
-        State state = new HairdressState();
-        HairdressView view = new HairdressView(state, null, null, null); // Detta funkar ej. Måste tänka om, hantera mer via state.
+        State state = new HairdressState(fifo);
+        
+        HairdressView view = new HairdressView(state, null, null, null); // Detta funkar ej. Mï¿½ste tï¿½nka om, hantera mer via state.
         
         Simulator sim = new Simulator(state);
 
