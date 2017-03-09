@@ -13,18 +13,10 @@ import generalSimulator.EventStore;
 public class FIFO {
 
 	private int numLost = 0;
-	private int numCustomers = 0;
 	private int max;
 	private double tempCutTime;
-
-	/**
-	 * 
-	 * @return the total amount of customers that we have made a profit on
-	 */
-	public int TotalCutCustomers() {
-		return numCustomers;
-	}
-
+	
+// The customer arraylist
 	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();
 	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
 	private ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();
@@ -32,7 +24,6 @@ public class FIFO {
 	private int maxQueueLength = HairdressState.queueLength;
 	private int numberOfCuttingChairs = HairdressState.numberOfChairs;
 
-	private int returns;
 
 	/**
 	 * 
@@ -44,25 +35,47 @@ public class FIFO {
 		customerGettingHaircut.add(customer);
 
 	}
+	
+	/**
+	 * 
+	 * The method removes the last customer in the customer Arraylist.
+	 * 
+	 * @param customerQueue
+	 * 				is a queue with customers.
+	 */
 
 	public void removeLast(ArrayList<Customer> customerQueue) {
 		customerQueue.remove(customerQueue.size() - 1);
 	}
-
+	
+	/**
+	 * 
+	 * @return the number of hairCuttingChairs that are not being used at this
+	 *         time.
+	 */
+	
 	public int idle() {
 		return numberOfCuttingChairs - customerGettingHaircut.size();
 	}
-
-	public void removeFirst(ArrayList<Customer> customerQueue) {
-		customerQueue.remove(0);
-
-	}
+	
+	
+/**
+ *  If numWaiting() (the size of the queue) is bigger than the max,
+ *   the numWaiting() is the new max.
+ *   
+ */
 
 	public void setMax() {
 		if (numWaiting() > max) {
 			max = numWaiting();
 		}
 	}
+	
+/**
+ * 
+ * @return max, the max size of the queue.
+ * 
+ */
 
 	public int getMax() {
 		return max;
@@ -77,12 +90,13 @@ public class FIFO {
 
 	public void addCustomer(Customer customer) {
 		customerGettingHaircut.add(customer);
-		numCustomers++;
 	}
 
 	/**
 	 * Tries to add a new customer to the simulation. If the customer is not
-	 * added then we count it as lost revenue.
+	 * added then we count it as lost revenue. Call the method setMax() if 
+	 * the queue get a new size.
+	 * 
 	 * 
 	 * @param customer
 	 *            is the customer that will be added or lost.
@@ -90,19 +104,21 @@ public class FIFO {
 	 *       <b>newCustomerQueue</b>
 	 */
 	public void addNew(Customer customer) {
-		if (getQueueSize() == maxQueueLength) {
+		if (numWaiting() == maxQueueLength) {
 			numLost++;
 		} else {
 
 			newCustomerQueue.add(customer);
+			setMax();
 		}
-		numCustomers++;
-		setMax();
 	}
 
 	/**
-	 * Tries to add a new customer to the simulation. If the customer is not
-	 * added then we count it as lost revenue.
+	 * Tries to add a old customer to the simulation. If the queue is full,
+	 *  it will check if there are any new customers in the queue. If it is,
+	 *  it will remove the new customer who came in last, and then place it into the old customer
+	 *  in the queue for old customers. If the old customer is not added then we count it as lost
+	 *  revenue. Call the method setMax() if the queue get a new size.
 	 * 
 	 * @param customer
 	 *            is the customer that will be added or lost.
@@ -110,11 +126,7 @@ public class FIFO {
 	 *       <b>oldCustomerQueue</b>
 	 */
 	public void addOld(Customer customer) {
-		if (!customer.getHasReturn()) {
-			returns++;
-		}
-		customer.setHasReturn();
-		if ((getQueueSize()) == maxQueueLength) {
+		if (numWaiting() == maxQueueLength) {
 			if (newCustomerQueue.size() > 0) {
 				removeLast(newCustomerQueue);// removeLast();
 				oldCustomerQueue.add(customer);
@@ -126,10 +138,6 @@ public class FIFO {
 		}
 	}
 
-	public int getReturns() {
-		return returns;
-	}
-
 	/**
 	 * 
 	 * @return The total amount of customers (both old an new) waiting inside
@@ -139,45 +147,67 @@ public class FIFO {
 		return (oldCustomerQueue.size() + newCustomerQueue.size());
 	}
 
+	
+	/**
+	 * 
+	 * @return numLost, the numbers of customer that have been lost.
+	 */
 	public int getNumLost() {
 		return numLost;
 	}
-
+/**
+ * 
+ * First we remove the customer as received a haircut of customerGettingHaircut.
+ * Then we will add a customer in queue to the customerGettingHaircut. 
+ * 
+ * If there is a customer in the oldCustomerQueue,we will add this customer to 
+ * the customerGettingHaircut and remove the customer from the oldCustomerQueue. 
+ * A done-event is also created for this customer.
+ * 
+ * If the oldCustomerQueue was empty, we check if  there is a customer in the
+ * newCustomerQueue. If there is a customer in the newCustomerQueue, we will
+ * add this customer to the customerGettingHaircut and remove the customer
+ * from the newCustomerQueue. A done-event is also created for this customer.
+ * 
+ * 
+ * @param customer 
+ * 		is the done customer as received a haircut. This customer
+ *  	will be removed from the customerGettingHaircut queue. 
+ *  
+ * @param state
+ * 		is the HairdressState.
+ * 
+ * @param store
+ * 		is the EventStore we add new done-events too.
+ */
 	public void addGetHaircut(Customer customer, HairdressState state, EventStore store) {
-		if (!customer.getHasReturn()) {
-			numCustomers++;
-
-		}
-		for (int i = 0; i < customerGettingHaircut.size(); i++) {
+		
+		for (int i = 0; i < customerGettingHaircut.size(); i++) {    //Tar bort den färdigklippta kunden från customerGettingHaircut
 			if (customerGettingHaircut.get(i) == customer) {
 				customerGettingHaircut.remove(i);
 			}
 		}
-		int i = 1;
-		Customer customerInQueue;
-		if (oldCustomerQueue.size() >= i) {
-			customerInQueue = oldCustomerQueue.get(0);
-			customerGettingHaircut.add(customerInQueue);
+		Customer fisrtCustomerInQueue;
+		
+		if (oldCustomerQueue.size() > 0) {  				 //om det finns någon customer i oldCustomerQueue
+			fisrtCustomerInQueue = oldCustomerQueue.get(0);
+			customerGettingHaircut.add(fisrtCustomerInQueue); // kommer den första i kön läggas till i customerGettingHaircut.
 			tempCutTime = state.getCutTime();
-
-			store.add(new Done(customerInQueue, state.getTime() + tempCutTime, store));
+			store.add(new Done(fisrtCustomerInQueue, state.getTime() + tempCutTime, store)); //Skapas ett done-event för customern
 			state.setAverageCutTime(tempCutTime);
+			oldCustomerQueue.remove(0);                  	//Sen kommer den tas bort från oldCustomerQueue.
+			
+		} else if (newCustomerQueue.size() > 0) { 			//annars om det finns någon customer i newCustomerQueue, 
+			fisrtCustomerInQueue = newCustomerQueue.get(0);	 
+			customerGettingHaircut.add(fisrtCustomerInQueue); //kommer den första i kön läggas till i customerGettingHaircut. 
+			tempCutTime = state.getCutTime();      
 
-			oldCustomerQueue.remove(0);
-		} else if (newCustomerQueue.size() >= i) {
-			customerInQueue = newCustomerQueue.get(0);
-			customerGettingHaircut.add(customerInQueue);
-			tempCutTime = state.getCutTime();
-
-			store.add(new Done(customerInQueue, state.getTime() + tempCutTime, store));
+			store.add(new Done(fisrtCustomerInQueue, state.getTime() + tempCutTime, store)); //skapas ett Done-event för customern som placerats in
 			state.setAverageCutTime(tempCutTime);
-			newCustomerQueue.remove(0);
+			newCustomerQueue.remove(0);      				//Sen kommer den tas bort från newCustomerQueue. 
 		}
 
 	}
-
-	public int getQueueSize() {
-		return oldCustomerQueue.size() + newCustomerQueue.size();
-	}
+	
 
 }

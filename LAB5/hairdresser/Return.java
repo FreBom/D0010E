@@ -43,7 +43,7 @@ public class Return extends Event {
 
 		if (customer.getHasReturn() == false) {
 			HSState.setReturnCustomer();
-			customer.getHasReturn();
+			customer.setHasReturn();
 		}
 
 		if (HSState.getFIFO().idle() > 0) {
