@@ -2,7 +2,12 @@ package random;
 
 import java.util.Random;
 
-
+/**
+ * Random generator
+ * 
+ * @author hj
+ *
+ */
 public class UniformRandomStream {
 
 	private Random rand;

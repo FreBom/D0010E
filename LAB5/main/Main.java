@@ -1,24 +1,25 @@
 package main;
 
-
 import generalSimulator.Simulator;
 import generalSimulator.State;
 import hairdresser.HairdressState;
 import hairdresser.HairdressView;
 
-public class Main{
-	
+/**
+ * This class initiate the simulation
+ * 
+ * @author aronh
+ *
+ */
+public class Main {
 
-	public static void main(String[] args){		
-		
-		
+	public static void main(String[] args) throws Exception {
 
-        State state = new HairdressState();
-        HairdressView view = new HairdressView(state);
-        Simulator sim = new Simulator(state, view);
+		State state = new HairdressState();
+		HairdressView view = new HairdressView(state);
+		Simulator sim = new Simulator(state, view);
 
-        sim.start(); 	
-       
+		sim.start(); // Simulation initiates
 
 	}
 

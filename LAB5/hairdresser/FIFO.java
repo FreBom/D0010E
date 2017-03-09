@@ -2,11 +2,7 @@ package hairdresser;
 
 import java.util.ArrayList;
 import hairdresser.Customer;
-
-import generalSimulator.Event;
 import generalSimulator.EventStore;
-import generalSimulator.Simulator;
-import generalSimulator.State;
 
 /**
  * 
@@ -14,13 +10,13 @@ import generalSimulator.State;
  *
  */
 
-public class FIFO  {
-	
+public class FIFO {
+
 	private int numLost = 0;
 	private int numCustomers = 0;
 	private int max;
 	private double tempCutTime;
-	
+
 	/**
 	 * 
 	 * @return the total amount of customers that we have made a profit on
@@ -35,40 +31,40 @@ public class FIFO  {
 
 	private int maxQueueLength = HairdressState.queueLength;
 	private int numberOfCuttingChairs = HairdressState.numberOfChairs;
-	
+
 	private int returns;
-	
+
 	/**
 	 * 
 	 * @return the number of hairCuttingChairs that are not being used at this
 	 *         time.
 	 */
 
-	public void addcustomerGettingHaircut(Customer customer){
+	public void addcustomerGettingHaircut(Customer customer) {
 		customerGettingHaircut.add(customer);
-		
+
 	}
-	
-	public void removeLast(ArrayList<Customer> customerQueue){
-		customerQueue.remove(customerQueue.size()-1);
+
+	public void removeLast(ArrayList<Customer> customerQueue) {
+		customerQueue.remove(customerQueue.size() - 1);
 	}
-	
+
 	public int idle() {
 		return numberOfCuttingChairs - customerGettingHaircut.size();
 	}
-	
-	public void removeFirst(ArrayList<Customer> customerQueue){
+
+	public void removeFirst(ArrayList<Customer> customerQueue) {
 		customerQueue.remove(0);
-		
+
 	}
-	
-	public void setMax(){
-		if (numWaiting()> max){
+
+	public void setMax() {
+		if (numWaiting() > max) {
 			max = numWaiting();
 		}
 	}
-	
-	public int getMax(){
+
+	public int getMax() {
 		return max;
 	}
 
@@ -83,10 +79,15 @@ public class FIFO  {
 		customerGettingHaircut.add(customer);
 		numCustomers++;
 	}
+
 	/**
-	 * Tries to add a new customer to the simulation. If the customer is not added then we count it as lost revenue.
-	 * @param customer is the customer that will be added or lost.
-	 * @NOTE this add method adds a customer to the Arraylist : <b>newCustomerQueue</b>
+	 * Tries to add a new customer to the simulation. If the customer is not
+	 * added then we count it as lost revenue.
+	 * 
+	 * @param customer
+	 *            is the customer that will be added or lost.
+	 * @NOTE this add method adds a customer to the Arraylist :
+	 *       <b>newCustomerQueue</b>
 	 */
 	public void addNew(Customer customer) {
 		if (getQueueSize() == maxQueueLength) {
@@ -98,58 +99,54 @@ public class FIFO  {
 		numCustomers++;
 		setMax();
 	}
+
 	/**
-	 * Tries to add a new customer to the simulation. If the customer is not added then we count it as lost revenue.
-	 * @param customer is the customer that will be added or lost.
-	 * @NOTE this add method adds a customer to the Arraylist : <b>oldCustomerQueue</b>
+	 * Tries to add a new customer to the simulation. If the customer is not
+	 * added then we count it as lost revenue.
+	 * 
+	 * @param customer
+	 *            is the customer that will be added or lost.
+	 * @NOTE this add method adds a customer to the Arraylist :
+	 *       <b>oldCustomerQueue</b>
 	 */
 	public void addOld(Customer customer) {
-		if (!customer.getHasReturn()){
+		if (!customer.getHasReturn()) {
 			returns++;
 		}
 		customer.setHasReturn();
 		if ((getQueueSize()) == maxQueueLength) {
-			if(newCustomerQueue.size() > 0){
-				removeLast(newCustomerQueue);//removeLast();
+			if (newCustomerQueue.size() > 0) {
+				removeLast(newCustomerQueue);// removeLast();
 				oldCustomerQueue.add(customer);
 			}
 			numLost++;
 		} else {
-		oldCustomerQueue.add(customer);
-		setMax();
+			oldCustomerQueue.add(customer);
+			setMax();
 		}
 	}
-	
-	public int getReturns(){
+
+	public int getReturns() {
 		return returns;
 	}
+
 	/**
 	 * 
-	 * @return The total amount of customers (both old an new) waiting inside the hairsaloon.
+	 * @return The total amount of customers (both old an new) waiting inside
+	 *         the hairsaloon.
 	 */
 	public int numWaiting() {
 		return (oldCustomerQueue.size() + newCustomerQueue.size());
 	}
-	
+
 	public int getNumLost() {
 		return numLost;
 	}
-	
-	/**
-	 * 
-	 * @param customerQueue The queue that we want to remove the last element from.
-	 */
-	
-	/**
-	 * 
-	 * @param customer The customer that has gotten their hair cut and is ready to pay and leave.
-	 * @param state 
-	 * @param store
-	 */
+
 	public void addGetHaircut(Customer customer, HairdressState state, EventStore store) {
-		if(!customer.getHasReturn()){
+		if (!customer.getHasReturn()) {
 			numCustomers++;
-			
+
 		}
 		for (int i = 0; i < customerGettingHaircut.size(); i++) {
 			if (customerGettingHaircut.get(i) == customer) {
@@ -163,23 +160,23 @@ public class FIFO  {
 			customerGettingHaircut.add(customerInQueue);
 			tempCutTime = state.getCutTime();
 
-			store.add(new Done(customerInQueue, state.getTime()  + tempCutTime, store));
+			store.add(new Done(customerInQueue, state.getTime() + tempCutTime, store));
 			state.setAverageCutTime(tempCutTime);
-			
+
 			oldCustomerQueue.remove(0);
 		} else if (newCustomerQueue.size() >= i) {
 			customerInQueue = newCustomerQueue.get(0);
 			customerGettingHaircut.add(customerInQueue);
 			tempCutTime = state.getCutTime();
 
-			store.add(new Done(customerInQueue, state.getTime()  + tempCutTime, store));
+			store.add(new Done(customerInQueue, state.getTime() + tempCutTime, store));
 			state.setAverageCutTime(tempCutTime);
 			newCustomerQueue.remove(0);
 		}
-	
+
 	}
-	
-	public int getQueueSize(){
+
+	public int getQueueSize() {
 		return oldCustomerQueue.size() + newCustomerQueue.size();
 	}
 

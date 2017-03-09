@@ -1,7 +1,12 @@
 package random;
 
 import java.util.Random;
-
+/**
+ * Random generator
+ * 
+ * @author hj
+ *
+ */
 public class ExponentialRandomStream {
 	
 	private Random rand;

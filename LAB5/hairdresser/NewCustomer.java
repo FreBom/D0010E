@@ -1,16 +1,14 @@
 package hairdresser;
-
+/**
+ * This class creates a new customer object with an integer id for tracking
+ * 
+ * @author arostr-5, Fanny, Dexmo
+ *
+ */
 public class NewCustomer {
-
-	private static int id = -1;
-
 	
+	private static int id = -1; // Simpler 
 
-	/*
-	 * Create a new customer
-	 * 
-	 * @return the new customer
-	 */
 	/**
 	 * 
 	 * @return a new customer with a specific id.
