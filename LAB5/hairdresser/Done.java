@@ -14,6 +14,7 @@ public class Done extends Event {
 
 	private Customer customer;
 	private HairdressState HSState;
+	private double tempCutTime;
 	/**
 	 * Constructor need the unique customer, time when it occurs and the store of events
 	 * 
@@ -43,7 +44,7 @@ public class Done extends Event {
 		HSState.setTime(getTime());
 		HSState.update();
 
-		if (customer.getHasCut() == false) { // As long the customers first cut we want to count
+		if (!customer.getHasCut()) { // As long the customers first cut we want to count
 
 			HSState.setCutCustomer();
 			customer.setHasCut();
@@ -53,17 +54,26 @@ public class Done extends Event {
 		if (HSState.getDissatisfied()) { // If the customer will be returning
 
 			getStore().add(new Return(customer, getTime() + HSState.getReturnTime(), getStore()));
-
+			
 		}
-		HSState.getFIFO().addGetHaircut(customer, HSState, getStore());
-
+	
+		Customer customerFirst = HSState.getFIFO().addGetHairCut(customer);
+		
+		if(!(customerFirst == null)){
+			tempCutTime = HSState.getCutTime();  
+			getStore().add(new Done(customerFirst, getTime() + tempCutTime, getStore()));
+			HSState.setAverageCutTime(tempCutTime);
+			
+		}
+		
+		
 	}
 	/**
 	 * The waitTime is handled and updated when the events occurs
 	 * 
 	 * @param HSState which is the specified state of the simulation, this is very specific
 	 */
-	public void updateWaitTime(HairdressState HSState) {
+	private void updateWaitTime(HairdressState HSState) {
 		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (getTime() - HSState.getTime()));
 
 	}
@@ -73,7 +83,7 @@ public class Done extends Event {
 	 * 
 	 * @param HSState the specified state
 	 */
-	public void updateIdleTime(HairdressState HSState) {
+	private void updateIdleTime(HairdressState HSState) {
 		HSState.addIdleTime((HSState.getFIFO().idle()) * (getTime() - HSState.getTime()));
 
 	}

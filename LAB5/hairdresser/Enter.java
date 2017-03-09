@@ -42,6 +42,7 @@ public class Enter extends Event {
 
 			HSState.setEventName(toString());
 			HSState.setCustomerID(customer.getID(this.customer));
+			customer.setEnterTime(getTime());
 
 			updateWaitTime(HSState);
 			updateIdleTime(HSState);
@@ -66,7 +67,7 @@ public class Enter extends Event {
 	 * 
 	 * @param HSState which is the specified state of the simulation, this is very specific
 	 */
-	public void updateWaitTime(HairdressState HSState) {
+	private void updateWaitTime(HairdressState HSState) {
 		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (getTime() - HSState.getTime()));
 
 	}
@@ -76,7 +77,7 @@ public class Enter extends Event {
 	 * 
 	 * @param HSState the specified state
 	 */
-	public void updateIdleTime(HairdressState HSState) {
+	private void updateIdleTime(HairdressState HSState) {
 		HSState.addIdleTime((HSState.getFIFO().idle()) * (getTime() - HSState.getTime()));
 
 	}

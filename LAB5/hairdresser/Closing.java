@@ -32,12 +32,19 @@ public class Closing extends Event {
 
 		HSState = (HairdressState) state;
 		HSState.setEventName(toString());
+		updateWaitTime(HSState);
+		
 		HSState.setTime(getTime());
 
 		HSState.update();
 
 		HSState.setClosed(true);
 		getStore().add(new StopHSS(999.0, getStore()));
+
+	}
+	
+	private void updateWaitTime(HairdressState HSState) {
+		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (getTime() - HSState.getTime()));
 
 	}
 

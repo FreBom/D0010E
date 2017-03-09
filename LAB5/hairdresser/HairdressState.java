@@ -12,23 +12,23 @@ import generalSimulator.State;
  */
 public class HairdressState extends State {
 
-	public final static int queueLength = 4;
-	public final static int numberOfChairs = 3;
-	public final static double probDissatisfied = 0.25;
-	public final static double simStopTime = 8.0;
+	public final static int queueLength = 2;
+	public final static int numberOfChairs = 2;
+	public final static double probDissatisfied = 0.5;
+	public final static double simStopTime = 7.0;
 	public final static double probDissatisfiedMin = 0.0;
 	public final static double probDissatisfiedMax = 1.0;
 	
-	public final static double lambda = 3.0;	//  Entry rate per 1/lambda
+	public final static double lambda = 1.2;	//  Entry rate per 1/lambda
 	public final static long seed = 1116;
 
 	
-	public final static double hmin = 0.8;	//	hmin & hmax, time with specified interval it takes to cut the hair.
-	public final static double hmax = 1.2;
+	public final static double hmin = 1.0;	//	hmin & hmax, time with specified interval it takes to cut the hair.
+	public final static double hmax = 2.0;
 
 	
-	public final static double dmin = 2.0;	//	dmin & dmax, time it takes for dissatisfied customer to return.
-	public final static double dmax = 3.0;
+	public final static double dmin = 1.0;	//	dmin & dmax, time it takes for dissatisfied customer to return.
+	public final static double dmax = 2.0;
 
 	private String eventName = "";
 	private double stateTime, totalWaitingTime, totalIdleTime, averageCutTime;

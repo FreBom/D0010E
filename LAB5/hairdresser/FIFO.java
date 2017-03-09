@@ -2,7 +2,6 @@ package hairdresser;
 
 import java.util.ArrayList;
 import hairdresser.Customer;
-import generalSimulator.EventStore;
 
 /**
  * 
@@ -14,7 +13,7 @@ public class FIFO {
 
 	private int numLost = 0;
 	private int max;
-	private double tempCutTime;
+	
 	
 // The customer arraylists
 	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();
@@ -23,12 +22,13 @@ public class FIFO {
 
 	private int maxQueueLength = HairdressState.queueLength;
 	private int numberOfCuttingChairs = HairdressState.numberOfChairs;
+//	private double[] newCusomerEnterTime = new double[maxQueueLength];
 
 
 	/**
 	 * 
-	 * @return the number of hairCuttingChairs that are not being used at this
-	 *         time.
+	 * @param customer
+	 * 		  is the customer that will be added to customerGettingHaircut.
 	 */
 
 	public void addcustomerGettingHaircut(Customer customer) {
@@ -122,14 +122,19 @@ public class FIFO {
 	 * 
 	 * @param customer
 	 *            is the customer that will be added or lost.
+	 * @param time
+	 * 			the time now. The time 
 	 * @NOTE this add method adds a customer to the Arraylist :
 	 *       <b>oldCustomerQueue</b>
 	 */
-	public void addOld(Customer customer) {
+	public void addOld(Customer customer, double time, HairdressState state) {
 		if (numWaiting() == maxQueueLength) {
 			if (newCustomerQueue.size() > 0) {
+				Customer customerLost = newCustomerQueue.get(newCustomerQueue.size() - 1);
 				removeLast(newCustomerQueue);// removeLast();
+				
 				oldCustomerQueue.add(customer);
+				state.addWaitingTime(-(time - customerLost.getEnterTime()));
 			}
 			numLost++;
 		} else {
@@ -162,52 +167,41 @@ public class FIFO {
  * 
  * If there is a customer in the oldCustomerQueue,we will add this customer to 
  * the customerGettingHaircut and remove the customer from the oldCustomerQueue. 
- * A done-event is also created for this customer.
- * 
+ *	
  * If the oldCustomerQueue was empty, we check if  there is a customer in the
  * newCustomerQueue. If there is a customer in the newCustomerQueue, we will
  * add this customer to the customerGettingHaircut and remove the customer
- * from the newCustomerQueue. A done-event is also created for this customer.
+ * from the newCustomerQueue.
  * 
  * 
  * @param customer 
  * 		is the done customer as received a haircut. This customer
  *  	will be removed from the customerGettingHaircut queue. 
  *  
- * @param state
- * 		is the HairdressState.
- * 
- * @param store
- * 		is the EventStore we add new done-events too.
  */
-	public void addGetHaircut(Customer customer, HairdressState state, EventStore store) {
+	public Customer addGetHairCut(Customer customer){
 		
-		for (int i = 0; i < customerGettingHaircut.size(); i++) {    //Tar bort den färdigklippta kunden från customerGettingHaircut
+		Customer firstCustomerInQueue = null;
+		
+		for (int i = 0; i < customerGettingHaircut.size(); i++) {    //Tar bort den fï¿½rdigklippta kunden frï¿½n customerGettingHaircut
 			if (customerGettingHaircut.get(i) == customer) {
 				customerGettingHaircut.remove(i);
 			}
 		}
-		Customer fisrtCustomerInQueue;
-		
-		if (oldCustomerQueue.size() > 0) {  				 //om det finns någon customer i oldCustomerQueue
-			fisrtCustomerInQueue = oldCustomerQueue.get(0);
-			customerGettingHaircut.add(fisrtCustomerInQueue); // kommer den första i kön läggas till i customerGettingHaircut.
-			tempCutTime = state.getCutTime();
-			store.add(new Done(fisrtCustomerInQueue, state.getTime() + tempCutTime, store)); //Skapas ett done-event för customern
-			state.setAverageCutTime(tempCutTime);
-			oldCustomerQueue.remove(0);                  	//Sen kommer den tas bort från oldCustomerQueue.
-			
-		} else if (newCustomerQueue.size() > 0) { 			//annars om det finns någon customer i newCustomerQueue, 
-			fisrtCustomerInQueue = newCustomerQueue.get(0);	 
-			customerGettingHaircut.add(fisrtCustomerInQueue); //kommer den första i kön läggas till i customerGettingHaircut. 
-			tempCutTime = state.getCutTime();      
 
-			store.add(new Done(fisrtCustomerInQueue, state.getTime() + tempCutTime, store)); //skapas ett Done-event för customern som placerats in
-			state.setAverageCutTime(tempCutTime);
-			newCustomerQueue.remove(0);      				//Sen kommer den tas bort från newCustomerQueue. 
+		if (oldCustomerQueue.size() > 0) {  				 //om det finns nï¿½gon customer i oldCustomerQueue
+			firstCustomerInQueue = oldCustomerQueue.get(0);
+			customerGettingHaircut.add(firstCustomerInQueue);
+			oldCustomerQueue.remove(0);   
+		
+		} else if (newCustomerQueue.size() > 0) { 			//annars om det finns nï¿½gon customer i newCustomerQueue, 
+			firstCustomerInQueue = newCustomerQueue.get(0);
+			customerGettingHaircut.add(firstCustomerInQueue);
+			newCustomerQueue.remove(0); 
+	
 		}
+		
+		return firstCustomerInQueue;
 
 	}
-	
-
 }

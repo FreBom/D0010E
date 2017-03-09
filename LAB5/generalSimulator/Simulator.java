@@ -39,7 +39,6 @@ public class Simulator {
 		while (!state.getEmergencyBreak()) {
 			e = eventList.getFirstAndRemove();
 			e.execute(state);
-			state.notifyObservers();
 
 		}
 		if(!eventList.isEmpty()) {

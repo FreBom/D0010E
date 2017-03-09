@@ -35,12 +35,14 @@ public class Return extends Event {
 		HSState = (HairdressState) state;
 		HSState.setEventName(toString());
 		HSState.setCustomerID(customer.getID(this.customer));
+		customer.setEnterTime(getTime());
 
-		updateWaitTime(HSState);
 		updateIdleTime(HSState);
+		updateWaitTime(HSState);
 		HSState.setTime(getTime());
 		HSState.update();
 
+		
 		if (customer.getHasReturn() == false) {
 			HSState.setReturnCustomer();
 			customer.setHasReturn();
@@ -52,10 +54,11 @@ public class Return extends Event {
 			getStore().add(new Done(customer, getTime() + tempCutTime, getStore()));
 			HSState.setAverageCutTime(tempCutTime);
 
-		} else {
-			HSState.getFIFO().addOld(customer);
-		}
 
+		} else {
+			HSState.getFIFO().addOld(customer, getTime(), HSState);
+		}
+		
 	}
 	
 	/**
@@ -63,7 +66,7 @@ public class Return extends Event {
 	 * 
 	 * @param HSState which is the specified state of the simulation, this is very specific
 	 */
-	public void updateWaitTime(HairdressState HSState) {
+	private void updateWaitTime(HairdressState HSState) {
 		HSState.addWaitingTime((HSState.getFIFO().numWaiting()) * (getTime() - HSState.getTime()));
 
 	}
@@ -74,7 +77,7 @@ public class Return extends Event {
 	 * 
 	 * @param HSState the specified state
 	 */
-	public void updateIdleTime(HairdressState HSState) {
+	private void updateIdleTime(HairdressState HSState) {
 		HSState.addIdleTime((HSState.getFIFO().idle()) * (getTime() - HSState.getTime()));
 
 	}
