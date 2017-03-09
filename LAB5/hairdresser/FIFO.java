@@ -16,7 +16,7 @@ public class FIFO {
 	private int max;
 	private double tempCutTime;
 	
-// The customer arraylist
+// The customer arraylists
 	private ArrayList<Customer> newCustomerQueue = new ArrayList<Customer>();
 	private ArrayList<Customer> oldCustomerQueue = new ArrayList<Customer>();
 	private ArrayList<Customer> customerGettingHaircut = new ArrayList<Customer>();
